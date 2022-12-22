@@ -1,0 +1,6 @@
+<RCC>
+    <qresource prefix="/">
+        <file>res/image/terminate.png</file>
+        <file>res/image/home_tag.png</file>
+    </qresource>
+</RCC>

@@ -56,7 +56,7 @@ private:
 
     QPushButton *openFileButton;
 
-    QTimer* _timer = nullptr;
+    bool cursorDisplay = true;
 
     void setInitPic();
 

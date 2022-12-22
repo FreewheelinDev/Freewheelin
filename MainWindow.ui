@@ -307,7 +307,7 @@
             <x>0</x>
             <y>0</y>
             <width>251</width>
-            <height>949</height>
+            <height>942</height>
            </rect>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_3">
@@ -365,6 +365,9 @@
                  </property>
                  <item>
                   <widget class="QLabel" name="effectLabel">
+                   <property name="styleSheet">
+                    <string notr="true">color: red;</string>
+                   </property>
                    <property name="text">
                     <string>Effect</string>
                    </property>
@@ -974,7 +977,7 @@
               <item>
                <widget class="QPushButton" name="pushButton_2">
                 <property name="text">
-                 <string> </string>
+                 <string/>
                 </property>
                </widget>
               </item>

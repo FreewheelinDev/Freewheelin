@@ -9,6 +9,7 @@
 #include <QImageReader>
 #include <QFileDialog>
 #include <QMessageBox>
+#include <thread>
 
 #include "MainWindow.h"
 #include "ui_MainWindow.h"
@@ -296,24 +297,49 @@ MainWindow::MainWindow(QWidget *parent) :
 
     // clear video list button clicked
     connect(clearAllButton, &QPushButton::clicked, this, [=]() {
-        playlist->clear();
-        outVideoList.clear();
-        // clear widget in the scroll area widget
-        QLayoutItem *child;
-        while ((child = videoButtonsLayout->takeAt(0)) != nullptr) {
-            delete child->widget();
-            delete child;
+        if (outVideoList.empty()) {
+            auto *msgBox = new QMessageBox(this);
+            msgBox->setText("No video in the list");
+            msgBox->setWindowTitle("Tip");
+            msgBox->setStandardButtons(QMessageBox::Ok);
+            msgBox->move(this->x()+(this->width())/2-msgBox->width()/2-187, (this->y()+TOP_BAR_HEIGHT)+(this->height()-TOP_BAR_HEIGHT-BOTTOM_BAR_HEIGHT)/2-msgBox->height()/2);
+            msgBox->exec();
+
+            return;
         }
-        videoListScrollAreaWidget->setMinimumWidth(0);
-        videoListScrollAreaWidget->setMaximumWidth(0);
-        TheButton::index = -1;
-        ui->topBarText->setText("Freewheelin");
 
-        // show the initPic
-        this->initPic->show();
 
-        // set the video progress bar to 0
-        ui->videoProgressSlider->setValue(0);
+        // a model dialog to ensure the user's operation
+        QMessageBox::StandardButton reply;
+        auto *messageBox = new QMessageBox(this);
+        messageBox->setWindowTitle("Clear Video List");
+        messageBox->setText("Are you sure to clear the video list?");
+        messageBox->setStandardButtons(QMessageBox::Yes | QMessageBox::No);
+        messageBox->setDefaultButton(QMessageBox::No);
+        messageBox->move(this->x()+(this->width())/2-messageBox->width()/2-240, (this->y()+TOP_BAR_HEIGHT)+(this->height()-TOP_BAR_HEIGHT-BOTTOM_BAR_HEIGHT)/2-messageBox->height()/2);
+        reply = static_cast<QMessageBox::StandardButton>(messageBox->exec());
+        if (reply == QMessageBox::Yes) {
+            playlist->clear();
+            outVideoList.clear();
+            // clear widget in the scroll area widget
+            QLayoutItem *child;
+            while ((child = videoButtonsLayout->takeAt(0)) != nullptr) {
+                delete child->widget();
+                delete child;
+            }
+            videoListScrollAreaWidget->setMinimumWidth(0);
+            videoListScrollAreaWidget->setMaximumWidth(0);
+            TheButton::index = -1;
+            ui->topBarText->setText("Freewheelin");
+
+            // show the initPic
+            this->initPic->show();
+
+            // set the video progress bar to 0
+            ui->videoProgressSlider->setValue(0);
+        } else {
+            return;
+        }
     });
 
     // when the pause button is clicked, the video will be paused
@@ -386,17 +412,28 @@ MainWindow::MainWindow(QWidget *parent) :
             initLabel->setGeometry(initPic->width()/2-300, initPic->height()/2-300-50, 600,600);
             openFileButton->setGeometry(initPic->width()/2-75, initPic->height()/2+50, 150, 35);
         } else {
-            ui->playPlace->setWindowFlags(Qt::Window);
-            initPic->setParent(ui->playPlace);
-            videoListWidget->setParent(ui->playPlace);
-            ui->playPlace->showFullScreen();
-            videoListWidget->setGeometry(0, ui->playPlace->height()-BOTTOM_BAR_HEIGHT-120, ui->playPlace->width(), VIDEO_LIST_WIDGET);
-            videoListWidgetScrollArea->setGeometry(40, 0, ui->playPlace->width()-40, VIDEO_LIST_WIDGET);
-            initPic->setGeometry(0, 0, ui->playPlace->width(), ui->playPlace->height()-BOTTOM_BAR_HEIGHT);
-            initLabel->setGeometry(initPic->width()/2-300, initPic->height()/2-300-50, 600,600);
-            openFileButton->setGeometry(initPic->width()/2-75, initPic->height()/2+50, 150, 35);
-            ui->topBar->hide();
-            this->hide();
+            if (TheButton::index != -1) {
+                ui->playPlace->setWindowFlags(Qt::Window);
+                initPic->setParent(ui->playPlace);
+                videoListWidget->setParent(ui->playPlace);
+                ui->playPlace->showFullScreen();
+                videoListWidget->setGeometry(0, ui->playPlace->height() - BOTTOM_BAR_HEIGHT - 120,
+                                             ui->playPlace->width(), VIDEO_LIST_WIDGET);
+                videoListWidgetScrollArea->setGeometry(40, 0, ui->playPlace->width() - 40, VIDEO_LIST_WIDGET);
+                initPic->setGeometry(0, 0, ui->playPlace->width(), ui->playPlace->height() - BOTTOM_BAR_HEIGHT);
+                initLabel->setGeometry(initPic->width() / 2 - 300, initPic->height() / 2 - 300 - 50, 600, 600);
+                openFileButton->setGeometry(initPic->width() / 2 - 75, initPic->height() / 2 + 50, 150, 35);
+                ui->topBar->hide();
+                this->hide();
+            } else {
+                // show tip message
+                auto *msgBox = new QMessageBox(this);
+                msgBox->setWindowTitle("Tip");
+                msgBox->setText("Please open a video first!");
+                msgBox->setStandardButtons(QMessageBox::Ok);
+                msgBox->move(this->x()+(this->width())/2-msgBox->width()/2-200, (this->y()+TOP_BAR_HEIGHT)+(this->height()-TOP_BAR_HEIGHT-BOTTOM_BAR_HEIGHT)/2-msgBox->height()/2);
+                msgBox->exec();
+            }
         }
     });
 }
@@ -680,7 +717,28 @@ void MainWindow::initWorkSpace() {
 }
 
 void MainWindow::mouseMoveEvent(QMouseEvent *event) {
+    if (!cursorDisplay) {
+        return;
+    }
     QWidget::mouseMoveEvent(event);
 
-    qDebug() << "mouse move";
+    if (ui->playPlace->isFullScreen()) {
+        qDebug() << "full screen";
+        if (!cursorDisplay) {
+            qDebug() << "cursor display";
+            ui->playPlace->setCursor(Qt::ArrowCursor);
+            this->videoListWidget->show();
+            ui->bottomBar->show();
+            cursorDisplay = true;
+
+            return;
+        }
+        QTimer::singleShot(2000, this, [=]() {
+            qDebug() << cursorDisplay;
+            ui->playPlace->setCursor(Qt::BlankCursor);
+            ui->bottomBar->hide();
+            this->videoListWidget->hide();
+            cursorDisplay = false;
+        });
+    }
 }

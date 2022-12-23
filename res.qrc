@@ -2,5 +2,7 @@
     <qresource prefix="/">
         <file>res/image/terminate.png</file>
         <file>res/image/home_tag.png</file>
+        <file>res/image/banner.png</file>
+        <file>res/image/banner-area.png</file>
     </qresource>
 </RCC>

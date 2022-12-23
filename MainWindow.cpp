@@ -10,6 +10,7 @@
 #include <QFileDialog>
 #include <QMessageBox>
 #include <thread>
+#include <QPainter>
 
 #include "MainWindow.h"
 #include "ui_MainWindow.h"
@@ -41,62 +42,71 @@ MainWindow::MainWindow(QWidget *parent) :
     // set the height of the top bar, the bottom bar fixed; set background color
     ui->topBar->setFixedHeight(TOP_BAR_HEIGHT);
     ui->bottomBar->setFixedHeight(BOTTOM_BAR_HEIGHT);
-    ui->topBar->setStyleSheet("background-color: rgb(206, 208, 209);");
-    ui->bottomBar->setStyleSheet("background-color: rgb(137, 147, 153)");
+    ui->topBar->setStyleSheet("background-color:#232323;");
+    // top bar lower border-line as black
+    ui->topBar->setStyleSheet("border-bottom: 1px solid black;");
+    ui->bottomBar->setStyleSheet("background-color:#232323");
+
 
     // initialize the setting button
-    initSettingButton();
+    initSettingButton(); // set a svg setting button instead latter
+
+
+    // ///////////// play related buttons ///////////////
+
+    ui->videoListButton->setStyleSheet("background-color:#454545;");
+
+    ui->previousVideoButton->setStyleSheet("background-color:#454545;");
+
+    ui->playVideoButton->setStyleSheet("background-color:#505050;");
+
+    ui->nextVideoButton->setStyleSheet("background-color:#454545;");
+
+    ui->volumeButton->setStyleSheet("background-color:#454545;");
+
+    ui->speedButton->setStyleSheet("background-color:#454545;");
+    // bug here the border radius is not working
+
+
+    // ///////////// play related buttons ///////////////
+
+
+    ui->terminateVideoButton->setStyleSheet("background-color:#454545;");
+    // set the border radius of the video list button
+
+
+
+
 
     // video progress slider
     ui->videoProgressSlider->setRange(0, 100);
     ui->videoProgressSlider->setValue(0);
-    ui->videoProgressSlider->setStyleSheet("QSlider::groove:horizontal {"
-                                          "border: 1px solid #bbb;"
-                                          "background: white;"
-                                          "height: 8px;"
-                                          "border-radius: 4px;"
-                                          "}"
-                                          "QSlider::handle:horizontal {"
-                                          "background: qlineargradient(x1:0, y1:0, x2:1, y2:1,"
-                                          "stop:0 #eee, stop:1 #ccc);"
-                                          "border: 1px solid #777;"
-                                          "width: 18px;"
-                                          "margin-top: -2px;"
-                                          "margin-bottom: -2px;"
-                                          "border-radius: 4px;"
-                                          "}"
-                                          "QSlider::handle:horizontal:hover {"
-                                          "background: qlineargradient(x1:0, y1:0, x2:1, y2:1,"
-                                          "stop:0 #fff, stop:1 #ddd);"
-                                          "border: 1px solid #444;"
-                                          "border-radius: 4px;"
-                                          "}"
-                                          "QSlider::sub-page:horizontal {"
-                                          "background: qlineargradient(x1:0, y1:0, x2:1, y2:1,"
-                                          "stop:0 #66e, stop:1 #bbf);"
-                                          "border: 1px solid #777;"
-                                          "height: 8px;"
-                                          "border-radius: 4px;"
-                                          "}"
-                                          "QSlider::add-page:horizontal {"
-                                          "background: #fff;"
-                                          "border: 1px solid #777;"
-                                          "height: 8px;"
-                                          "border-radius: 4px;"
-                                          "}"
-                                          "QSlider::add-page:horizontal:disabled {"
-                                          "background: #eee;"
-                                          "border-color: #999;"
-                                          "}"
-                                          "QSlider::sub-page:horizontal:disabled {"
-                                          "background: #eee;"
-                                          "border-color: #999;"
-                                          "}"
-                                          "QSlider::handle:horizontal:disabled {"
-                                          "background: #eee;"
-                                          "border: 1px solid #aaa;"
-                                          "border-radius: 4px;"
-                                          "}"
+
+    // Adobe PR style slider
+    ui->videoProgressSlider->setStyleSheet(
+            "QSlider::groove:horizontal {"
+            "height: 5px;"
+            "border:1px;"
+            "border-radius: 6px;"
+            "background: #3D3E3E;"
+            "}"
+            "QSlider::handle:horizontal {"
+            "background:#E7E5E8;"
+            "border: 1px solid #5c5c5c;"
+            "width: 2px;"
+            "margin-top: -18px;"
+            "margin-bottom: -18px;"
+            "border-radius: 1px;"
+
+            "}"
+            "QSlider::sub-page:horizontal {"
+//           more white than the groove
+            "background:#565656;"
+            "height: 5px;"
+            "border:1px;"
+            "border-radius: 6px;"
+            // radius does not work
+            "}"
     );
 
     // volume slider
@@ -130,12 +140,13 @@ MainWindow::MainWindow(QWidget *parent) :
 
     // initialize the video list widget
     videoListWidget = new QWidget(this);
-    videoListWidget->setStyleSheet("background-color: #fffff4;");
-    videoListWidget->setGeometry(0, this->height()-BOTTOM_BAR_HEIGHT-videoListWidget->height(), this->width()-ui->workPlace->width(), VIDEO_LIST_WIDGET);
+    videoListWidget->setStyleSheet("background-color: #1D1D1D;");
+    videoListWidget->setGeometry(0, this->height() - BOTTOM_BAR_HEIGHT - videoListWidget->height(),
+                                 this->width() - ui->workPlace->width(), VIDEO_LIST_WIDGET);
     videoListWidget->hide();
     // add a widget to left side of the video list widget
     videoListWidgetLeftWidget = new QWidget(videoListWidget);
-    videoListWidgetLeftWidget->setStyleSheet("background-color: #909090;");
+    videoListWidgetLeftWidget->setStyleSheet("background-color: #232323;");
     videoListWidgetLeftWidget->setGeometry(0, 0, 40, videoListWidget->height());
     // add 3 buttons to the left widget vertically
     auto *cycleVideoButton = new QPushButton(videoListWidgetLeftWidget);
@@ -146,8 +157,8 @@ MainWindow::MainWindow(QWidget *parent) :
     clearAllButton->setGeometry(10, 85, 20, 20);
     // add a scroll area to the right side of the video list widget
     videoListWidgetScrollArea = new QScrollArea(videoListWidget);
-    videoListWidgetScrollArea->setStyleSheet("background-color: white;");
-    videoListWidgetScrollArea->setGeometry(40, 0, videoListWidget->width()-40, videoListWidget->height());
+    videoListWidgetScrollArea->setStyleSheet("background-color: #1D1D1D;");
+    videoListWidgetScrollArea->setGeometry(40, 0, videoListWidget->width() - 40, videoListWidget->height());
 
     // toggle the video list widget's state
     connect(ui->videoListButton, &QPushButton::clicked, this, &MainWindow::toggleVideoListWidgetState);
@@ -160,7 +171,7 @@ MainWindow::MainWindow(QWidget *parent) :
     player->mTimer->start();
     connect(player->mTimer, &QTimer::timeout, this, [=]() {
         if (player->state() == QMediaPlayer::PlayingState) {
-            ui->videoProgressSlider->setValue(player->position()*100/player->duration());
+            ui->videoProgressSlider->setValue(player->position() * 100 / player->duration());
         }
         // set progress text
         QTime time(0, 0, 0);
@@ -185,51 +196,30 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->volumeSlider->setMaximumWidth(120);
     ui->volumeSliderWidget->setMaximumWidth(120);
     ui->volumeSlider->setValue(50);
-    // set the style sheet of volume slider with macOS style
-    ui->volumeSlider->setStyleSheet("QSlider::groove:horizontal {"
-                                    "border: 1px solid #bbb;"
-                                    "background: white;"
-                                    "height: 10px;"
-                                    "border-radius: 4px;"
-                                    "}"
-                                    "QSlider::sub-page:horizontal {"
-                                    "background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,"
-                                    "stop: 0 #66e, stop: 1 #bbf);"
-                                    "background: qlineargradient(x1: 0, y1: 0.2, x2: 1, y2: 1,"
-                                    "stop: 0 #bbf, stop: 1 #55f);"
-                                    "border: 1px solid #777;"
-                                    "height: 10px;"
-                                    "border-radius: 4px;"
-                                    "}"
-                                    "QSlider::add-page:horizontal {"
-                                    "background: #fff;"
-                                    "border: 1px solid #777;"
-                                    "height: 10px;"
-                                    "border-radius: 4px;"
-                                    "}"
-                                    "QSlider::handle:horizontal {"
-                                    "background: qlineargradient(x1:0, y1:0, x2:1, y2:1,"
-                                    "stop:0 #eee, stop:1 #ccc);"
-                                    "border: 1px solid #777;"
-                                    "width: 13px;"
-                                    "margin-top: -2px;"
-                                    "margin-bottom: -2px;"
-                                    "border-radius: 4px;"
-                                    "}"
-                                    "QSlider::handle:horizontal:hover {"
-                                    "background: qlineargradient(x1:0, y1:0, x2:1, y2:1,"
-                                    "stop:0 #fff, stop:1 #ddd);"
-                                    "border: 1px solid #444;"
-                                    "border-radius: 4px;"
-                                    "}"
-                                    "QSlider::sub-page:horizontal:disabled {"
-                                    "background: #bbb;"
-                                    "border-color: #999;"
-                                    "}"
-                                    "QSlider::add-page:horizontal:disabled {"
-                                    "background: #eee;"
-                                    "border-color: #999;"
-                                    "}");
+
+    ui->volumeSlider->setStyleSheet(
+            "QSlider::groove:horizontal {"
+            "height: 6px;"
+            "border:1px;"
+            "border-radius: 2px;"
+            "background: #3D3E3E;"
+            "}"
+            "QSlider::handle:horizontal {"
+            "background:#E7E5E8;"
+
+            "width: 2px;"
+            "height: 13px;"
+            "margin-top: -18px;"
+            "margin-bottom: -18px;"
+            "border-radius: 6px;"
+            "}"
+            "QSlider::sub-page:horizontal {"
+            "background:#565656;"
+            "height: 6px;"
+            "border: 1px;"
+            "border-radius: 2px;"
+            "}"
+    );
     player->setVolume(ui->volumeSlider->value());
 
     // set the volume of the video
@@ -246,7 +236,9 @@ MainWindow::MainWindow(QWidget *parent) :
     fileDialog->setOption(QFileDialog::ShowDirsOnly);
 
     auto *videoListScrollAreaWidget = new QWidget(videoListWidgetScrollArea);
-    videoListScrollAreaWidget->setStyleSheet("background-color: white;");
+    videoListScrollAreaWidget->setStyleSheet("background-color:#1D1D1D;");
+    // set font color
+    videoListScrollAreaWidget->setStyleSheet("color: #A2A2A2;");
     auto *videoButtonsLayout = new QHBoxLayout(videoListScrollAreaWidget);
     videoListScrollAreaWidget->setLayout(videoButtonsLayout);
     videoListScrollAreaWidget->setFixedHeight(120);
@@ -264,12 +256,12 @@ MainWindow::MainWindow(QWidget *parent) :
             string pathString = path.toStdString();
             cout << pathString << endl;
             outVideoList = getVideoList(pathString);
-            vector<QUrl*> outVideoUrlList;
-            for (auto &i : outVideoList) {
+            vector<QUrl *> outVideoUrlList;
+            for (auto &i: outVideoList) {
                 outVideoUrlList.push_back(i->url);
             }
             playlist->clear();
-            for (auto &i : outVideoUrlList) {
+            for (auto &i: outVideoUrlList) {
                 playlist->addMedia(*i);
             }
             // cout the playlist
@@ -302,21 +294,25 @@ MainWindow::MainWindow(QWidget *parent) :
             msgBox->setText("No video in the list");
             msgBox->setWindowTitle("Tip");
             msgBox->setStandardButtons(QMessageBox::Ok);
-            msgBox->move(this->x()+(this->width())/2-msgBox->width()/2-187, (this->y()+TOP_BAR_HEIGHT)+(this->height()-TOP_BAR_HEIGHT-BOTTOM_BAR_HEIGHT)/2-msgBox->height()/2);
+            msgBox->move(this->x() + (this->width()) / 2 - msgBox->width() / 2 - 187,
+                         (this->y() + TOP_BAR_HEIGHT) + (this->height() - TOP_BAR_HEIGHT - BOTTOM_BAR_HEIGHT) / 2 -
+                         msgBox->height() / 2);
             msgBox->exec();
 
             return;
         }
 
 
-        // a model dialog to ensure the user's operation
+    // a model dialog to ensure the user's operation
         QMessageBox::StandardButton reply;
         auto *messageBox = new QMessageBox(this);
         messageBox->setWindowTitle("Clear Video List");
         messageBox->setText("Are you sure to clear the video list?");
         messageBox->setStandardButtons(QMessageBox::Yes | QMessageBox::No);
         messageBox->setDefaultButton(QMessageBox::No);
-        messageBox->move(this->x()+(this->width())/2-messageBox->width()/2-240, (this->y()+TOP_BAR_HEIGHT)+(this->height()-TOP_BAR_HEIGHT-BOTTOM_BAR_HEIGHT)/2-messageBox->height()/2);
+        messageBox->move(this->x() + (this->width()) / 2 - messageBox->width() / 2 - 240,
+                         (this->y() + TOP_BAR_HEIGHT) + (this->height() - TOP_BAR_HEIGHT - BOTTOM_BAR_HEIGHT) / 2 -
+                         messageBox->height() / 2);
         reply = static_cast<QMessageBox::StandardButton>(messageBox->exec());
         if (reply == QMessageBox::Yes) {
             playlist->clear();
@@ -342,6 +338,217 @@ MainWindow::MainWindow(QWidget *parent) :
         }
     });
 
+
+    // ////////////////workspace styling //////////////////////////
+    // bg #616161 text #A2A2A2 border-radius 5px
+    ui->effectButton->setStyleSheet("QPushButton{"
+                                    "background-color:#616161;"
+                                    "border-radius:5px;"
+                                    "color:#A2A2A2;"
+                                    "}"
+                                    "QPushButton:hover{"
+                                    "background-color:#616161;"
+                                    "border-radius:5px;"
+                                    "color:#A2A2A2;"
+                                    "}"
+                                    "QPushButton:pressed{"
+                                    "background-color:#616161;"
+                                    "border-radius:5px;"
+                                    "color:#A2A2A2;"
+                                    "}"
+    );
+    ui->effectButton->setCursor(Qt::PointingHandCursor);
+    // bg #616161 text #A2A2A2 border-radius 5px apple style width 80px,height 23px
+    ui->addTextureButton->setStyleSheet("QPushButton{"
+                                        "background-color:#616161;"
+                                        "border-radius:5px;"
+                                        "color:#DDDDDD;"
+                                        "width:68px;"
+                                        "height:17px;"
+                                        "}"
+                                        "QPushButton:hover{"
+                                        "background-color:#616161;"
+                                        "border-radius:5px;"
+                                        "color:#DDDDDD;"
+                                        "width:68px;"
+                                        "height:17px;"
+                                        "}"
+                                        "QPushButton:pressed{"
+                                        "background-color:#616161;"
+                                        "border-radius:5px;"
+                                        "color:#DDDDDD;"
+                                        "width:68px;"
+                                        "height:17px;"
+                                        "}"
+    );
+    ui->addTextureButton->setCursor(Qt::PointingHandCursor);
+    ui->lumetriButton->setStyleSheet(
+            "QPushButton{"
+            "background-color:#616161;"
+            "border-radius:5px;"
+            "color:#A2A2A2;"
+            "}"
+            "QPushButton:hover{"
+            "background-color:#616161;"
+            "border-radius:5px;"
+            "color:#A2A2A2;"
+            "}"
+            "QPushButton:pressed{"
+            "background-color:#616161;"
+            "border-radius:5px;"
+            "color:#A2A2A2;"
+            "}"
+    );
+    ui->lumetriButton->setCursor(Qt::PointingHandCursor);
+
+    ui->lumetriPresetButton->setStyleSheet(
+            "QPushButton{"
+            "background-color:#616161;"
+            "border-radius:5px;"
+            "color:#DDDDDD;"
+            "width:68px;"
+            "height:17px;"
+            "}"
+            "QPushButton:hover{"
+            "background-color:#616161;"
+            "border-radius:5px;"
+            "color:#DDDDDD;"
+            "width:68px;"
+            "height:17px;"
+            "}"
+            "QPushButton:pressed{"
+            "background-color:#616161;"
+            "border-radius:5px;"
+            "color:#DDDDDD;"
+            "width:68px;"
+            "height:17px;"
+            "}"
+
+    );
+    ui->lumetriPresetButton->setCursor(Qt::PointingHandCursor);
+
+    ui->videoEffectsButton->setStyleSheet("QPushButton{"
+                                          "background-color:#616161;"
+                                          "border-radius:5px;"
+                                          "color:#DDDDDD;"
+                                          "width:68px;"
+                                          "height:17px;"
+                                          "}"
+                                          "QPushButton:hover{"
+                                          "background-color:#616161;"
+                                          "border-radius:5px;"
+                                          "color:#DDDDDD;"
+                                          "width:68px;"
+                                          "height:17px;"
+                                          "}"
+                                          "QPushButton:pressed{"
+                                          "background-color:#616161;"
+                                          "border-radius:5px;"
+                                          "color:#DDDDDD;"
+                                          "width:68px;"
+                                          "height:17px;"
+                                          "}"
+    );
+    ui->videoEffectsButton->setCursor(Qt::PointingHandCursor);
+    // bg #616161 text #A2A2A2 border-radius 5px apple style width 80px,height 23px
+    ui->videoTransitionButton->setStyleSheet("QPushButton{"
+                                             "background-color:#616161;"
+                                             "border-radius:5px;"
+                                             "color:#DDDDDD;"
+                                             "width:68px;"
+                                             "height:17px;"
+
+                                             "}"
+                                             "QPushButton:hover{"
+                                             "background-color:#616161;"
+                                             "border-radius:5px;"
+                                             "color:#DDDDDD;"
+                                             "width:68px;"
+                                             "height:17px;"
+
+                                             "}"
+                                             "QPushButton:pressed{"
+                                             "background-color:#616161;"
+                                             "border-radius:5px;"
+                                             "color:#DDDDDD;"
+                                             "width:68px;"
+                                             "height:17px;"
+
+                                             "}"
+    );
+    ui->videoEffectsButton->setCursor(Qt::PointingHandCursor);
+    // the same style as the volume slider however the sub page color is more bright
+
+    ui->horizontalSlider->setStyleSheet(
+            "QSlider::groove:horizontal {"
+             "height: 3px;"
+             "border:1px;"
+             "border-radius: 5px;"
+             "background: #3D3E3E;"
+             "}"
+             "QSlider::handle:horizontal {"
+             "background:#E7E5E8;"
+             "border: 1px solid #5c5c5c;"
+             "width: 2px;"
+             "margin-top: -5px;"
+             "margin-bottom: -5px;"
+             "border-radius: 5px;"
+             "}"
+             "QSlider::sub-page:horizontal {"
+             "background:#FFFFFF;"
+             "height: 3px;"
+             "border:1px;"
+             "border-radius: 5px;"
+             "}"
+    );
+
+    ui->pushButton_2->setStyleSheet("QPushButton{"
+                                    "background-color:#616161;"
+                                    "border-radius:5px;"
+                                    "color:#DDDDDD;"
+                                    "width:28px;"
+                                    "height:17px;"
+                                    "}"
+                                    "QPushButton:hover{"
+                                    "background-color:#616161;"
+                                    "border-radius:5px;"
+                                    "color:#DDDDDD;"
+                                    "width:28px;"
+                                    "height:17px;"
+                                    "}"
+                                    "QPushButton:pressed{"
+                                    "background-color:#616161;"
+                                    "border-radius:5px;"
+                                    "color:#DDDDDD;"
+                                    "width:28px;"
+                                    "height:17px;"
+                                    "}"
+    );
+    // ////////////////workspace styling end //////////////////////////
+// bg color#6C757D
+    ui->ExportpushButton->setStyleSheet(
+            "QPushButton{"
+            "background-color:#FFC107;"
+            "border-radius:5px;"
+
+            "width:68px;"
+            "height:17px;"
+            "}"
+            "QPushButton:hover{"
+            "background-color:#FFC107;"
+            "border-radius:5px;"
+
+            "width:68px;"
+            "height:17px;"
+            "}"
+            "QPushButton:pressed{"
+            "background-color:#FFC107;"
+            "border-radius:5px;"
+
+            "width:68px;"
+            "height:17px;"
+            "}"
+    );
     // when the pause button is clicked, the video will be paused
     connect(ui->playVideoButton, &QPushButton::clicked, this, [=]() {
         if (player->state() == QMediaPlayer::PlayingState) {
@@ -374,13 +581,13 @@ MainWindow::MainWindow(QWidget *parent) :
     // when the video progress slider is moved, the video will be moved to the position
     connect(ui->videoProgressSlider, &QSlider::sliderMoved, this, [=](int value) {
         player->mTimer->stop();
-        player->setPosition(ui->videoProgressSlider->value()*player->duration()/100);
+        player->setPosition(ui->videoProgressSlider->value() * player->duration() / 100);
     });
     connect(ui->videoProgressSlider, &QSlider::sliderReleased, this, [=]() {
         player->mTimer->start();
     });
     connect(ui->videoProgressSlider, &QSlider::sliderPressed, this, [=]() {
-        player->setPosition(ui->videoProgressSlider->value()*player->duration()/100);
+        player->setPosition(ui->videoProgressSlider->value() * player->duration() / 100);
     });
 
     // different speed button clicked
@@ -406,11 +613,14 @@ MainWindow::MainWindow(QWidget *parent) :
             ui->playPlace->showNormal();
             ui->topBar->show();
             this->show();
-            videoListWidget->setGeometry(0, this->height()-BOTTOM_BAR_HEIGHT-videoListWidget->height(), this->width()-ui->workPlace->width(), VIDEO_LIST_WIDGET);
-            videoListWidgetScrollArea->setGeometry(40, 0, this->width()-WORKPLACE_WIDTH-40, videoListWidget->height());
-            initPic->setGeometry(0, TOP_BAR_HEIGHT, this->width()-WORKPLACE_WIDTH, this->height()-BOTTOM_BAR_HEIGHT-TOP_BAR_HEIGHT);
-            initLabel->setGeometry(initPic->width()/2-300, initPic->height()/2-300-50, 600,600);
-            openFileButton->setGeometry(initPic->width()/2-75, initPic->height()/2+50, 150, 35);
+            videoListWidget->setGeometry(0, this->height() - BOTTOM_BAR_HEIGHT - videoListWidget->height(),
+                                         this->width() - ui->workPlace->width(), VIDEO_LIST_WIDGET);
+            videoListWidgetScrollArea->setGeometry(40, 0, this->width() - WORKPLACE_WIDTH - 40,
+                                                   videoListWidget->height());
+            initPic->setGeometry(0, TOP_BAR_HEIGHT, this->width() - WORKPLACE_WIDTH,
+                                 this->height() - BOTTOM_BAR_HEIGHT - TOP_BAR_HEIGHT);
+            initLabel->setGeometry(initPic->width() / 2 - 300, initPic->height() / 2 - 300 - 50, 600, 600);
+            openFileButton->setGeometry(initPic->width() / 2 - 75, initPic->height() / 2 + 50, 150, 35);
         } else {
             if (TheButton::index != -1) {
                 ui->playPlace->setWindowFlags(Qt::Window);
@@ -431,7 +641,9 @@ MainWindow::MainWindow(QWidget *parent) :
                 msgBox->setWindowTitle("Tip");
                 msgBox->setText("Please open a video first!");
                 msgBox->setStandardButtons(QMessageBox::Ok);
-                msgBox->move(this->x()+(this->width())/2-msgBox->width()/2-200, (this->y()+TOP_BAR_HEIGHT)+(this->height()-TOP_BAR_HEIGHT-BOTTOM_BAR_HEIGHT)/2-msgBox->height()/2);
+                msgBox->move(this->x() + (this->width()) / 2 - msgBox->width() / 2 - 200,
+                             (this->y() + TOP_BAR_HEIGHT) + (this->height() - TOP_BAR_HEIGHT - BOTTOM_BAR_HEIGHT) / 2 -
+                             msgBox->height() / 2);
                 msgBox->exec();
             }
         }
@@ -446,15 +658,17 @@ void MainWindow::resizeEvent(QResizeEvent *event) {
     QWidget::resizeEvent(event);
 
     // set the width of video list widget
-    int width = this->width()-ui->workPlace->width();
-    videoListWidget->setGeometry(0, this->height()-BOTTOM_BAR_HEIGHT-videoListWidget->height(), width, videoListWidget->height());
+    int width = this->width() - ui->workPlace->width();
+    videoListWidget->setGeometry(0, this->height() - BOTTOM_BAR_HEIGHT - videoListWidget->height(), width,
+                                 videoListWidget->height());
     // set the width of scroll area
-    videoListWidgetScrollArea->setGeometry(40, 0, width-40, videoListWidget->height());
+    videoListWidgetScrollArea->setGeometry(40, 0, width - 40, videoListWidget->height());
 
     // set the initPic
-    initPic->setGeometry(0, TOP_BAR_HEIGHT, this->width()-WORKPLACE_WIDTH, this->height()-TOP_BAR_HEIGHT-BOTTOM_BAR_HEIGHT);
-    initLabel->setGeometry(initPic->width()/2-300, initPic->height()/2-300-50, 600,600);
-    openFileButton->setGeometry(initPic->width()/2-75, initPic->height()/2+50, 150, 35);
+    initPic->setGeometry(0, TOP_BAR_HEIGHT, this->width() - WORKPLACE_WIDTH,
+                         this->height() - TOP_BAR_HEIGHT - BOTTOM_BAR_HEIGHT);
+    initLabel->setGeometry(initPic->width() / 2 - 300, initPic->height() / 2 - 300 - 50, 600, 600);
+    openFileButton->setGeometry(initPic->width() / 2 - 75, initPic->height() / 2 + 50, 150, 35);
 }
 
 void MainWindow::toggleVideoListWidgetState() {
@@ -465,10 +679,10 @@ void MainWindow::toggleVideoListWidgetState() {
     }
 }
 
-std::vector<TheButton*> MainWindow::getVideoList (std::string loc) {
+std::vector<TheButton *> MainWindow::getVideoList(std::string loc) {
 //    std::vector<TheButtonInfo> out =  std::vector<TheButtonInfo>();
-    auto *out = new std::vector<TheButton*>();
-    QDir dir(QString::fromStdString(loc) );
+    auto *out = new std::vector<TheButton *>();
+    QDir dir(QString::fromStdString(loc));
     QDirIterator it(dir);
 
     while (it.hasNext()) { // for all files
@@ -480,22 +694,22 @@ std::vector<TheButton*> MainWindow::getVideoList (std::string loc) {
 #if defined(_WIN32)
             if (f.contains(".wmv"))  { // windows
 #else
-            if (f.contains(".mp4") || f.contains("MOV"))  { // mac/linux
+            if (f.contains(".mp4") || f.contains("MOV")) { // mac/linux
 #endif
 
-                QString thumb = f.left( f .length() - 4) +".png";
+                QString thumb = f.left(f.length() - 4) + ".png";
                 if (QFile(thumb).exists()) { // if a png thumbnail exists
                     auto *imageReader = new QImageReader(thumb);
                     QImage sprite = imageReader->read(); // read the thumbnail
                     if (!sprite.isNull()) {
-                        QUrl* iconUrl = new QUrl(thumb);
-                        QUrl* url = new QUrl(QUrl::fromLocalFile( f )); // convert the file location to a generic url
+                        QUrl *iconUrl = new QUrl(thumb);
+                        QUrl *url = new QUrl(QUrl::fromLocalFile(f)); // convert the file location to a generic url
                         // get the title of the video
                         QString title = f.mid(f.lastIndexOf('/') + 1);
                         title = title.left(title.length());
-                        auto* label = new QLabel(title);
+                        auto *label = new QLabel(title);
                         // get the duration of the video
-                        auto* playerTmp = new QMediaPlayer();
+                        auto *playerTmp = new QMediaPlayer();
                         playerTmp->setMedia(*url);
                         playerTmp->play();
                         // wait for the video to load
@@ -504,15 +718,13 @@ std::vector<TheButton*> MainWindow::getVideoList (std::string loc) {
                         }
                         playerTmp->pause();
                         QString duration = QTime(0, 0, 0).addMSecs(playerTmp->duration()).toString("mm:ss");
-                        auto* durationLabel = new QLabel(duration);
+                        auto *durationLabel = new QLabel(duration);
                         out->push_back(new TheButton(videoListWidgetScrollArea, url, &sprite, label, durationLabel));
 
                         delete playerTmp;
-                    }
-                    else
+                    } else
                         qDebug() << "warning: skipping video because I couldn't process thumbnail " << thumb << endl;
-                }
-                else
+                } else
                     qDebug() << "warning: skipping video because I couldn't find thumbnail " << thumb << endl;
             }
     }
@@ -529,8 +741,15 @@ void MainWindow::showEditDurationBox() {
         messageBox->setParent(ui->playArea);
         messageBox->setWindowTitle("Warning");
         messageBox->setText("Please select a video first.");
+
+        // set the font color
+        messageBox->setStyleSheet("QLabel{color:#A2A2A2;}");
+        messageBox->setStandardButtons(QMessageBox::Ok);
+
         // relative move
-        messageBox->move(this->x()+(this->width())/2-messageBox->width()/2-200, (this->y()+TOP_BAR_HEIGHT)+(this->height()-TOP_BAR_HEIGHT-BOTTOM_BAR_HEIGHT)/2-messageBox->height()/2);
+        messageBox->move(this->x() + (this->width()) / 2 - messageBox->width() / 2 - 200,
+                         (this->y() + TOP_BAR_HEIGHT) + (this->height() - TOP_BAR_HEIGHT - BOTTOM_BAR_HEIGHT) / 2 -
+                         messageBox->height() / 2);
         messageBox->exec();
     } else {
         // pause the video
@@ -542,7 +761,9 @@ void MainWindow::showEditDurationBox() {
         time = time.addMSecs(duration);
         auto durationText = time.toString("mm:ss");
         auto *editDurationBox = new EditDurationBox(QString(durationText), this);
-        editDurationBox->move(this->x()+(this->width())/2-editDurationBox->width()/2-WORKPLACE_WIDTH/2, (this->y()+TOP_BAR_HEIGHT)+(this->height()-TOP_BAR_HEIGHT-BOTTOM_BAR_HEIGHT)/2-editDurationBox->height()/2);
+        editDurationBox->move(this->x() + (this->width()) / 2 - editDurationBox->width() / 2 - WORKPLACE_WIDTH / 2,
+                              (this->y() + TOP_BAR_HEIGHT) + (this->height() - TOP_BAR_HEIGHT - BOTTOM_BAR_HEIGHT) / 2 -
+                              editDurationBox->height() / 2);
         editDurationBox->exec();
     }
 }
@@ -557,6 +778,8 @@ void MainWindow::initSettingButton() {
     // menu list
     auto *menu = new QMenu(settingButton);
     auto *languageMenu = new QMenu("Set Language", menu);
+    // set the font color as white
+
     languageMenu->addAction("English(US)");
     languageMenu->addSeparator();
     languageMenu->addAction("English(UK)");
@@ -662,11 +885,25 @@ void MainWindow::initSettingButton() {
 void MainWindow::setInitPic() {
     // set the initial picture when the program starts
     initPic = new QWidget(this);
-    initPic->setStyleSheet("background-color: #ececec;");
+    initPic->setStyleSheet("background-color: #1a1a1a;");
     initLabel = new QLabel(initPic);
-    initLabel->setPixmap(QPixmap(":/res/image/home_tag.png"));
+    initLabel->setPixmap(QPixmap(":/res/image/banner-area.png"));
+    // resize the img to 160X160
+
     openFileButton = new QPushButton(initPic);
     openFileButton->setText("Open File");
+
+//     set the bg as #1373E6, and the radius 22px
+//     after hover, change the color as #0F66d0
+//     adobe style
+    openFileButton->setStyleSheet("QPushButton{"
+                                  "border: none; background-color: #1373E6; color: white; height: 30px; border-radius: 5px;"
+                                  "}"
+                                  "QPushButton:hover{"
+                                  "background-color: #0F66d0;"
+                                  "}");
+
+
     openFileButton->setCursor(Qt::PointingHandCursor);
     initLabel->setScaledContents(true);
     initPic->setGeometry(0, TOP_BAR_HEIGHT, this->width() - WORKPLACE_WIDTH,
@@ -677,42 +914,51 @@ void MainWindow::setInitPic() {
 
 void MainWindow::initWorkSpace() {
     // set the width of work space fixed
+
     ui->workPlace->setFixedWidth(WORKPLACE_WIDTH);
     // set the background color of work space
     ui->workPlace->setStyleSheet("background-color: #232323;");
 
     ui->editDurationButton->setCursor(Qt::PointingHandCursor);
-    ui->editDurationButton->setStyleSheet("QPushButton{border: none; background-color: #ac7979; color: #ffffff; height: 25px; border-radius: 5px;}"
-                                          "QPushButton:hover{background-color: #1d6f1d;}"
-                                          "QPushButton:pressed{background-color: #1d6f1d;}");
+//    ui->editDurationButton->setStyleSheet(
+//            "QPushButton{border: none; background-color: #ac7979; color: #A2A2A2; height: 25px; border-radius: 5px;}"
+//            "QPushButton:hover{background-color: #1d6f1d;}"
+//            "QPushButton:pressed{background-color: #1d6f1d;}");
+// adobe style
+    ui->editDurationButton->setStyleSheet(
+            "QPushButton{border: none; background-color: #1373E6; color: white; height: 25px; border-radius: 5px;}"
+            "QPushButton:hover{background-color: #0F66d0;}"
+            "QPushButton:pressed{background-color: #0F66d0;}");
+    // when cursor is hover, set it to a hand
     ui->editDurationButton->setText("Edit Duration");
 
     // set the style of the scroll bar
     ui->scrollArea->verticalScrollBar()->setStyleSheet("QScrollBar:vertical {"
-                                                      "width: 10px;"
-                                                      "background: #232323;"
-                                                      "margin: 0px 0px 0px 0px;"
-                                                      "padding-top: 0px;"
-                                                      "padding-bottom: 0px;"
-                                                      "}"
-                                                      "QScrollBar::handle:vertical {"
-                                                      "background: #ac7979;"
-                                                      "min-height: 20px;"
-                                                      "border-radius: 5px;"
-                                                      "}"
-                                                      "QScrollBar::add-line:vertical {"
-                                                      "height: 0px;"
-                                                      "subcontrol-position: bottom;"
-                                                      "subcontrol-origin: margin;"
-                                                      "}"
-                                                      "QScrollBar::sub-line:vertical {"
-                                                      "height: 0 px;"
-                                                      "subcontrol-position: top;"
-                                                      "subcontrol-origin: margin;"
-                                                      "}"
-                                                      "QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {"
-                                                      "background: none;"
-                                                      "}");
+                                                       "border: none;"
+                                                       "background: #232323;"
+                                                       "width: 10px;"
+                                                       "margin: 0px 0px 0px 0px;"
+                                                       "}"
+                                                       "QScrollBar::handle:vertical {"
+                                                       "background: #3d3d3d;"
+                                                       "min-height: 20px;"
+                                                       "border-radius: 5px;"
+                                                       "}"
+                                                       "QScrollBar::add-line:vertical {"
+                                                       "height: 0px;"
+                                                       "subcontrol-position: bottom;"
+                                                       "subcontrol-origin: margin;"
+                                                       "}"
+                                                       "QScrollBar::sub-line:vertical {"
+                                                       "height: 0 px;"
+                                                       "subcontrol-position: top;"
+                                                       "subcontrol-origin: margin;"
+                                                       "}"
+                                                       "QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {"
+                                                       "background: none;"
+                                                       "}");
+
+
 
 }
 

@@ -58,11 +58,11 @@ private:
 
     bool cursorDisplay = true;
 
-    void setInitPic();
+    void setInitPic(); // set all the pics
 
-    void initSettingButton();
+    void initSettingButton(); // set the setting button
 
-    void initWorkSpace();
+    void initWorkSpace(); // init the workplace
 
 private slots:
     void toggleVideoListWidgetState();

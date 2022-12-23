@@ -6,12 +6,15 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>973</width>
-    <height>645</height>
+    <width>1010</width>
+    <height>1027</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>MainWindow</string>
+  </property>
+  <property name="styleSheet">
+   <string/>
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QHBoxLayout" name="horizontalLayout" stretch="7,3">
@@ -32,6 +35,10 @@
     </property>
     <item>
      <widget class="QWidget" name="playPlace" native="true">
+      <property name="styleSheet">
+       <string notr="true">background-color:#232323
+</string>
+      </property>
       <layout class="QVBoxLayout" name="verticalLayout" stretch="1,8,0">
        <property name="spacing">
         <number>0</number>
@@ -59,6 +66,10 @@
           </property>
           <item>
            <widget class="QLabel" name="topBarText">
+            <property name="styleSheet">
+             <string notr="true">color:#A2A2A2
+</string>
+            </property>
             <property name="text">
              <string>Freewheelin</string>
             </property>
@@ -75,6 +86,9 @@
        </item>
        <item>
         <widget class="QWidget" name="bottomBar" native="true">
+         <property name="styleSheet">
+          <string notr="true">border-top:1px solid black</string>
+         </property>
          <layout class="QHBoxLayout" name="horizontalLayout_2">
           <property name="spacing">
            <number>-1</number>
@@ -87,6 +101,9 @@
           </property>
           <item>
            <widget class="QPushButton" name="videoListButton">
+            <property name="styleSheet">
+             <string notr="true">border-top: none;</string>
+            </property>
             <property name="text">
              <string/>
             </property>
@@ -94,6 +111,9 @@
           </item>
           <item>
            <widget class="QPushButton" name="previousVideoButton">
+            <property name="styleSheet">
+             <string notr="true">border-top: none;</string>
+            </property>
             <property name="text">
              <string/>
             </property>
@@ -101,6 +121,9 @@
           </item>
           <item>
            <widget class="QPushButton" name="playVideoButton">
+            <property name="styleSheet">
+             <string notr="true">border-top: none;</string>
+            </property>
             <property name="text">
              <string/>
             </property>
@@ -108,6 +131,9 @@
           </item>
           <item>
            <widget class="QPushButton" name="nextVideoButton">
+            <property name="styleSheet">
+             <string notr="true">border-top: none;</string>
+            </property>
             <property name="text">
              <string/>
             </property>
@@ -115,6 +141,9 @@
           </item>
           <item>
            <widget class="QPushButton" name="terminateVideoButton">
+            <property name="styleSheet">
+             <string notr="true">border-top: none;</string>
+            </property>
             <property name="text">
              <string/>
             </property>
@@ -122,6 +151,9 @@
           </item>
           <item>
            <widget class="QWidget" name="widget_2" native="true">
+            <property name="styleSheet">
+             <string notr="true">border-top: none;</string>
+            </property>
             <layout class="QHBoxLayout" name="horizontalLayout_6">
              <property name="leftMargin">
               <number>0</number>
@@ -143,6 +175,9 @@
                  <verstretch>0</verstretch>
                 </sizepolicy>
                </property>
+               <property name="styleSheet">
+                <string notr="true">border-top: none;</string>
+               </property>
                <property name="value">
                 <number>50</number>
                </property>
@@ -159,6 +194,9 @@
           </item>
           <item>
            <widget class="QLabel" name="videoProgressText">
+            <property name="styleSheet">
+             <string notr="true">border-top: none;color:#A2A2A2;padding-top:6px</string>
+            </property>
             <property name="text">
              <string>00:00</string>
             </property>
@@ -166,6 +204,9 @@
           </item>
           <item>
            <widget class="QPushButton" name="speedButton">
+            <property name="styleSheet">
+             <string notr="true">border-top: none;color:#A2A2A2</string>
+            </property>
             <property name="text">
              <string/>
             </property>
@@ -179,6 +220,9 @@
               <verstretch>0</verstretch>
              </sizepolicy>
             </property>
+            <property name="styleSheet">
+             <string notr="true">border-top: none;</string>
+            </property>
             <property name="text">
              <string/>
             </property>
@@ -186,6 +230,9 @@
           </item>
           <item>
            <widget class="QWidget" name="volumeSliderWidget" native="true">
+            <property name="styleSheet">
+             <string notr="true">border-top: none;</string>
+            </property>
             <layout class="QHBoxLayout" name="horizontalLayout_5">
              <property name="leftMargin">
               <number>0</number>
@@ -219,6 +266,9 @@
               <horstretch>0</horstretch>
               <verstretch>0</verstretch>
              </sizepolicy>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">border-top: none;</string>
             </property>
             <property name="text">
              <string/>
@@ -260,6 +310,9 @@
        </property>
        <item>
         <widget class="QWidget" name="workSpaceLabelWidget" native="true">
+         <property name="styleSheet">
+          <string notr="true">color:#A2A2A2</string>
+         </property>
          <layout class="QHBoxLayout" name="horizontalLayout_4">
           <property name="leftMargin">
            <number>0</number>
@@ -295,6 +348,9 @@
        </item>
        <item>
         <widget class="QScrollArea" name="scrollArea">
+         <property name="styleSheet">
+          <string notr="true">color:#A2A2A2</string>
+         </property>
          <property name="widgetResizable">
           <bool>true</bool>
          </property>
@@ -306,8 +362,8 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>251</width>
-            <height>942</height>
+            <width>289</width>
+            <height>993</height>
            </rect>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_3">
@@ -366,10 +422,10 @@
                  <item>
                   <widget class="QLabel" name="effectLabel">
                    <property name="styleSheet">
-                    <string notr="true">color: red;</string>
+                    <string notr="true"/>
                    </property>
                    <property name="text">
-                    <string>Effect</string>
+                    <string>  Effect</string>
                    </property>
                   </widget>
                  </item>
@@ -414,7 +470,7 @@
                  <item>
                   <widget class="QLabel" name="addTextureLabel">
                    <property name="text">
-                    <string>Add Texture</string>
+                    <string>  Add Texture</string>
                    </property>
                   </widget>
                  </item>
@@ -434,7 +490,7 @@
                  <item>
                   <widget class="QPushButton" name="addTextureButton">
                    <property name="text">
-                    <string>ADD</string>
+                    <string>Add</string>
                    </property>
                   </widget>
                  </item>
@@ -459,7 +515,7 @@
                  <item>
                   <widget class="QLabel" name="lumetriPresetLabel">
                    <property name="text">
-                    <string>Lumetri Preset</string>
+                    <string>  Lumetri Preset</string>
                    </property>
                   </widget>
                  </item>
@@ -504,7 +560,7 @@
                  <item>
                   <widget class="QLabel" name="videoEffectsLabel">
                    <property name="text">
-                    <string>Video Effects</string>
+                    <string>  Video Effects</string>
                    </property>
                   </widget>
                  </item>
@@ -533,6 +589,10 @@
               </item>
               <item>
                <widget class="QWidget" name="videoTransitionWidget" native="true">
+                <property name="styleSheet">
+                 <string notr="true">margin-bottom:10px;
+</string>
+                </property>
                 <layout class="QHBoxLayout" name="horizontalLayout_11">
                  <property name="leftMargin">
                   <number>0</number>
@@ -549,7 +609,7 @@
                  <item>
                   <widget class="QLabel" name="videoTransitionLabel">
                    <property name="text">
-                    <string>Video Transition</string>
+                    <string> Video Transition</string>
                    </property>
                   </widget>
                  </item>
@@ -580,7 +640,21 @@
             </widget>
            </item>
            <item>
+            <widget class="Line" name="line_3">
+             <property name="styleSheet">
+              <string notr="true">background-color:#333333;
+height:2px</string>
+             </property>
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
+             </property>
+            </widget>
+           </item>
+           <item>
             <widget class="QWidget" name="lumetriButtonWidget" native="true">
+             <property name="styleSheet">
+              <string notr="true">margin-top:10px</string>
+             </property>
              <layout class="QHBoxLayout" name="horizontalLayout_13">
               <property name="spacing">
                <number>10</number>
@@ -626,6 +700,9 @@
            </item>
            <item>
             <widget class="QWidget" name="basicConnectionWidget" native="true">
+             <property name="styleSheet">
+              <string notr="true">margin-bottom:5px</string>
+             </property>
              <layout class="QHBoxLayout" name="horizontalLayout_14">
               <property name="leftMargin">
                <number>0</number>
@@ -639,7 +716,7 @@
               <item>
                <widget class="QLabel" name="basicConnectionLabel">
                 <property name="text">
-                 <string>Basic Connection</string>
+                 <string>Basic Connection </string>
                 </property>
                </widget>
               </item>
@@ -667,9 +744,12 @@
             </widget>
            </item>
            <item>
-            <widget class="QLabel" name="label">
+            <widget class="QLabel" name="adjustmentLabel">
+             <property name="styleSheet">
+              <string notr="true"/>
+             </property>
              <property name="text">
-              <string>Adjustment</string>
+              <string> Adjustment</string>
              </property>
              <property name="margin">
               <number>0</number>
@@ -678,6 +758,9 @@
            </item>
            <item>
             <widget class="QWidget" name="widget_3" native="true">
+             <property name="styleSheet">
+              <string notr="true">margin-top:5px</string>
+             </property>
              <layout class="QVBoxLayout" name="verticalLayout_6">
               <property name="spacing">
                <number>0</number>
@@ -690,6 +773,9 @@
               </property>
               <item>
                <widget class="QWidget" name="widget_4" native="true">
+                <property name="styleSheet">
+                 <string notr="true">margin-bottom:5px</string>
+                </property>
                 <layout class="QHBoxLayout" name="horizontalLayout_15">
                  <property name="leftMargin">
                   <number>0</number>
@@ -735,6 +821,9 @@
               </item>
               <item>
                <widget class="QWidget" name="widget_5" native="true">
+                <property name="styleSheet">
+                 <string notr="true">margin-bottom:5px</string>
+                </property>
                 <layout class="QHBoxLayout" name="horizontalLayout_16">
                  <property name="leftMargin">
                   <number>0</number>
@@ -780,6 +869,9 @@
               </item>
               <item>
                <widget class="QWidget" name="widget_6" native="true">
+                <property name="styleSheet">
+                 <string notr="true">margin-bottom:5px</string>
+                </property>
                 <layout class="QHBoxLayout" name="horizontalLayout_17">
                  <property name="leftMargin">
                   <number>0</number>
@@ -927,6 +1019,17 @@
                </widget>
               </item>
              </layout>
+            </widget>
+           </item>
+           <item>
+            <widget class="Line" name="line_4">
+             <property name="styleSheet">
+              <string notr="true">background-color:#333333;
+height:2px</string>
+             </property>
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
+             </property>
             </widget>
            </item>
            <item>
@@ -1353,9 +1456,12 @@
            <number>0</number>
           </property>
           <item>
-           <widget class="QPushButton" name="pushButton">
+           <widget class="QPushButton" name="ExportpushButton">
+            <property name="styleSheet">
+             <string notr="true">color:black</string>
+            </property>
             <property name="text">
-             <string/>
+             <string>Export</string>
             </property>
            </widget>
           </item>
@@ -1372,7 +1478,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>973</width>
+     <width>1010</width>
      <height>24</height>
     </rect>
    </property>

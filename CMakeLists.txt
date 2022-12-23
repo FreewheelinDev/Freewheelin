@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.24)
+cmake_minimum_required(VERSION 3.21)
 project(Freewheelin)
 
 set(CMAKE_CXX_STANDARD 11)
@@ -6,7 +6,7 @@ set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
 set(CMAKE_AUTOUIC ON)
 
-set(CMAKE_PREFIX_PATH "/opt/homebrew/Cellar/qt@5/5.15.7")
+set(CMAKE_PREFIX_PATH "/opt/homebrew/Cellar/qt@5/5.15.6")
 
 find_package(Qt5 COMPONENTS
         Core

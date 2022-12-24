@@ -5,9 +5,22 @@
         <file>res/image/banner.png</file>
         <file>res/image/banner-area.png</file>
         <file>res/image/pause.png</file>
+        <file>res/image/play.png</file>
+        <file>res/image/next-video.png</file>
+        <file>res/image/prev-video.png</file>
+        <file>res/image/terminate_play.png</file>
+        <file>res/image/full-screen.png</file>
+        <file>res/image/shrink-to-normal.png</file>
         <file>res/image/color-span.png</file>
         <file>res/image/test.png</file>
         <file>res/image/extractor.png</file>
         <file>res/image/extractor.svg</file>
+        <file>res/image/toggle-list.png</file>
+        <file>res/image/clear-list.png</file>
+        <file>res/image/more.png</file>
+        <file>res/image/shuffle.png</file>
+        <file>res/image/cycle.png</file>
+        <file>res/image/volume-on.png</file>
+        <file>res/image/volume-off.png</file>
     </qresource>
 </RCC>

@@ -5,10 +5,14 @@
 #include <QSlider>
 #include "EditDurationBox.h"
 
-EditDurationBox::EditDurationBox(const QString& duration, QWidget *parent) : QDialog(parent) {
+EditDurationBox::EditDurationBox(const QString &duration, QWidget *parent) : QDialog(parent) {
     setWindowTitle("Edit Duration");
     setWindowFlags(Qt::Window | Qt::WindowTitleHint | Qt::CustomizeWindowHint);
     setFixedSize(500, 150);
+    // set the style bg as #232323
+    // set the style of the text as #A2A2A2
+    setStyleSheet("background-color: #232323; color: #A2A2A2;");
+
     auto *layout = new QVBoxLayout(this);
     auto *editArea = new QWidget(this);
     auto *editLayout = new QHBoxLayout(editArea);
@@ -17,48 +21,27 @@ EditDurationBox::EditDurationBox(const QString& duration, QWidget *parent) : QDi
     slider->setRange(0, 100);
     slider->setValue(0);
     slider->setStyleSheet("QSlider::groove:horizontal {"
-                          "border: 1px solid #bbb;"
-                          "background: white;"
-                          "height: 10px;"
-                          "border-radius: 4px;"
+                          "height: 6px;"
+                          "border:1px;"
+                          "border-radius: 2px;"
+                          "background: #3D3E3E;"
+
                           "}"
-                          "QSlider::sub-page:horizontal {"
-                          "background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,"
-                          "stop: 0 #66e, stop: 1 #bbf);"
-                          "background: qlineargradient(x1: 0, y1: 0.2, x2: 1, y2: 1,"
-                          "stop: 0 #bbf, stop: 1 #55f);"
-                          "border: 1px solid #777;"
-                          "height: 10px;"
-                          "border-radius: 4px;"
-                          "}"
-                          "QSlider::add-page:horizontal {"
-                          "background: #fff;"
-                          "border: 1px solid #777;"
-                          "height: 10px;"
-                          "border-radius: 4px;"
-                          "}"
+
                           "QSlider::handle:horizontal {"
-                          "background: qlineargradient(x1:0, y1:0, x2:1, y2:1,"
-                          "stop:0 #eee, stop:1 #ccc);"
-                          "border: 1px solid #777;"
-                          "width: 13px;"
-                          "margin-top: -2px;"
-                          "margin-bottom: -2px;"
-                          "border-radius: 4px;"
+                          "background:#E7E5E8;"
+                          "width: 2px;"
+                          "height: 13px;"
+                          "margin-top: -18px;"
+                          "margin-bottom: -18px;"
+                          "border-radius: 6px;"
                           "}"
-                          "QSlider::handle:horizontal:hover {"
-                          "background: qlineargradient(x1:0, y1:0, x2:1, y2:1,"
-                          "stop:0 #fff, stop:1 #ddd);"
-                          "border: 1px solid #444;"
-                          "border-radius: 4px;"
-                          "}"
-                          "QSlider::sub-page:horizontal:disabled {"
-                          "background: #bbb;"
-                          "border-color: #999;"
-                          "}"
-                          "QSlider::add-page:horizontal:disabled {"
-                          "background: #eee;"
-                          "border-color: #999;"
+
+                          "QSlider::sub-page:horizontal {"
+                          "background:#565656;"
+                          "height: 6px;"
+                          "border: 1px;"
+                          "border-radius: 2px;"
                           "}");
     connect(slider, &QSlider::valueChanged, [=]() {
         // calculate the seconds
@@ -77,6 +60,50 @@ EditDurationBox::EditDurationBox(const QString& duration, QWidget *parent) : QDi
     auto *spacerItem = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
     auto *cancelButton = new QPushButton("Cancel", buttonArea);
     auto *saveButton = new QPushButton("Save", buttonArea);
+
+    // set the save and cancel button style
+    cancelButton->setStyleSheet("QPushButton{"
+                                "background-color:#616161;"
+                                "border-radius:5px;"
+                                "color:#DDDDDD;"
+                                "width:68px;"
+                                "height:17px;"
+                                "}"
+                                "QPushButton:hover{"
+                                "background-color:#616161;"
+                                "border-radius:5px;"
+                                "color:#DDDDDD;"
+                                "width:68px;"
+                                "height:17px;"
+                                "}"
+                                "QPushButton:pressed{"
+                                "background-color:#616161;"
+                                "border-radius:5px;"
+                                "color:#DDDDDD;"
+                                "width:68px;"
+                                "height:17px;"
+                                "}");
+    saveButton->setStyleSheet("QPushButton{"
+                                "background-color:#616161;"
+                                "border-radius:5px;"
+                                "color:#DDDDDD;"
+                                "width:68px;"
+                                "height:17px;"
+                                "}"
+                                "QPushButton:hover{"
+                                "background-color:#616161;"
+                                "border-radius:5px;"
+                                "color:#DDDDDD;"
+                                "width:68px;"
+                                "height:17px;"
+                                "}"
+                                "QPushButton:pressed{"
+                                "background-color:#616161;"
+                                "border-radius:5px;"
+                                "color:#DDDDDD;"
+                                "width:68px;"
+                                "height:17px;"
+                                "}");
     buttonLayout->addItem(spacerItem);
     buttonLayout->addWidget(cancelButton);
     buttonLayout->addWidget(saveButton);

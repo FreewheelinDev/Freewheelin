@@ -31,8 +31,6 @@ public:
 protected:
     void resizeEvent(QResizeEvent *event) override;
 
-    void mouseMoveEvent(QMouseEvent *event) override;
-
 private:
     Ui::MainWindow *ui;
 
@@ -56,7 +54,7 @@ private:
 
     QPushButton *openFileButton;
 
-    bool cursorDisplay = true;
+    int lastVolume = 0;
 
     void setInitPic(); // set all the pics
 

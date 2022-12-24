@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1920</width>
-    <height>1027</height>
+    <width>1384</width>
+    <height>847</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -214,10 +214,12 @@ margin-right:6px</string>
           <item>
            <widget class="QPushButton" name="speedButton">
             <property name="styleSheet">
-             <string notr="true">border-top: none;color:#A2A2A2</string>
+             <string notr="true">
+
+</string>
             </property>
             <property name="text">
-             <string/>
+             <string> 1.0x</string>
             </property>
            </widget>
           </item>
@@ -371,7 +373,7 @@ margin-right:6px</string>
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>562</width>
+            <width>386</width>
             <height>969</height>
            </rect>
           </property>
@@ -1504,7 +1506,7 @@ height:2px</string>
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1920</width>
+     <width>1384</width>
      <height>24</height>
     </rect>
    </property>

@@ -95,9 +95,10 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->fullScreenButton->setStyleSheet("border-style:solid; border-width:1px; border-color:none;"
                                         "border-radius: 5px; background-color:#454545;margin-left: 5px;width: 20px;height: 20px;");
 
-
-    ui->speedButton->setStyleSheet("border-style:solid; border-width:1px; border-color:none;"
-                                   "border-radius: 5px; background-color:#454545;margin-right: 3px;");
+    ui->speedButton->setStyleSheet("QPushButton{"
+                                   "color: #a2a2a2; border-color:none;"
+                                   "border-radius: 5px; background-color:#454545;margin-right: 3px; min-width: 38px; min-height: 20px;}"
+                                   "QPushButton::menu-indicator{image: none;}");
 
 
 
@@ -147,14 +148,25 @@ MainWindow::MainWindow(QWidget *parent) :
 
     // speed list
     auto *speedList = new QMenu(ui->speedButton);
-    auto *actionSpeed1 = new QAction("0.5x", this);
-    auto *actionSpeed2 = new QAction("1.0x", this);
-    auto *actionSpeed3 = new QAction("1.5x", this);
-    auto *actionSpeed4 = new QAction("2.0x", this);
-    speedList->addAction(actionSpeed1);
-    speedList->addAction(actionSpeed2);
-    speedList->addAction(actionSpeed3);
-    speedList->addAction(actionSpeed4);
+    // style sheet
+    speedList->setStyleSheet("QMenu{background-color:#454545; color:#a2a2a2; border:1px solid #454545;}"
+                             "QMenu::item:selected{background-color:#696969; color:#a2a2a2; cursor: pointer;}");
+    speedList->addAction("0.5x", this, [=]() {
+        ui->speedButton->setText(" 0.5x");
+        player->setPlaybackRate(0.5);
+    });
+    speedList->addAction("1.0x", this, [=]() {
+        ui->speedButton->setText(" 1.0x");
+        player->setPlaybackRate(1.0);
+    });
+    speedList->addAction("1.5x", this, [=]() {
+        ui->speedButton->setText(" 1.5x");
+        player->setPlaybackRate(1.5);
+    });
+    speedList->addAction("2.0x", this, [=]() {
+        ui->speedButton->setText(" 2.0x");
+        player->setPlaybackRate(2.0);
+    });
 
     // speed button
     ui->speedButton->setCursor(Qt::PointingHandCursor);
@@ -188,7 +200,7 @@ MainWindow::MainWindow(QWidget *parent) :
     cycleVideoButton->setIcon(QIcon(":/res/image/cycle.png"));
     cycleVideoButton->setIconSize(QSize(14, 14));
     cycleVideoButton->setStyleSheet("QPushButton{border-style:solid; border-width:1px; border-color:none;"
-                                    "border-radius: 5px; ;margin-right: 3px;width: 30 px;height: 30px;}"
+                                    "border-radius: 5px; ;margin-right: 3px;width: 30 px;height: 30px; background-color: #565656;}"
                                     "QPushButton:hover{background-color:#565656;}"
                                     "QPushButton:pressed{background-color:#454545;}");
 
@@ -247,10 +259,27 @@ MainWindow::MainWindow(QWidget *parent) :
     // random play
     connect(randomVideoButton, &QPushButton::clicked, this, [=]() {
         playlist->setPlaybackMode(QMediaPlaylist::Random);
+        cycleVideoButton->setStyleSheet("QPushButton{border-style:solid; border-width:1px; border-color:none;"
+                                        "border-radius: 5px; ;margin-right: 3px;width: 30 px;height: 30px;}"
+                                        "QPushButton:hover{background-color:#565656;}"
+                                        "QPushButton:pressed{background-color:#454545;}");
+        randomVideoButton->setStyleSheet("QPushButton{border-style:solid; border-width:1px; border-color:none;"
+                                         "border-radius: 5px; ;margin-right: 3px;width: 30 px;height: 30px; background-color: #565656;}"
+                                         "QPushButton:hover{background-color:#565656;}"
+                                         "QPushButton:pressed{background-color:#454545;}");
     });
     // cycle play
     connect(cycleVideoButton, &QPushButton::clicked, this, [=]() {
         playlist->setPlaybackMode(QMediaPlaylist::Loop);
+        cycleVideoButton->setStyleSheet("QPushButton{border-style:solid; border-width:1px; border-color:none;"
+                                         "border-radius: 5px; ;margin-right: 3px;width: 30 px;height: 30px; background-color: #565656;}"
+                                         "QPushButton:hover{background-color:#565656;}"
+                                         "QPushButton:pressed{background-color:#454545;}");
+        randomVideoButton->setStyleSheet("QPushButton{border-style:solid; border-width:1px; border-color:none;"
+                                         "border-radius: 5px; ;margin-right: 3px;width: 30 px;height: 30px;}"
+                                         "QPushButton:hover{background-color:#565656;}"
+                                         "QPushButton:pressed{background-color:#454545;}");
+
     });
 
     // set the initial volume
@@ -288,6 +317,11 @@ MainWindow::MainWindow(QWidget *parent) :
     // set the volume of the video
     connect(ui->volumeSlider, &QSlider::valueChanged, this, [=](int value) {
         player->setVolume(value);
+        if (value == 0) {
+            ui->volumeButton->setIcon(QIcon(":/res/image/volume-off.png"));
+        } else {
+            ui->volumeButton->setIcon(QIcon(":/res/image/volume-on.png"));
+        }
     });
 
     // edit the duration of the video
@@ -335,9 +369,9 @@ MainWindow::MainWindow(QWidget *parent) :
                 videoButtonsLayout->addWidget(outVideoList[i]);
                 connect(outVideoList[i], &TheButton::clicked, this, [=]() {
                     playlist->setCurrentIndex(i);
-                    TheButton::index = i;
                     ui->topBarText->setText(outVideoList[i]->title->text());
                     player->play();
+                    TheButton::index = playlist->currentIndex();
                     // hide the initPic
                     this->initPic->hide();
                 });
@@ -747,6 +781,7 @@ MainWindow::MainWindow(QWidget *parent) :
             "height:17px;"
             "}"
     );
+
     // set label image and size with 100X100 high resolution using smooth transformation
     //    ui->label_5->setPixmap(QPixmap(":/res/image/test.png").scaled(80,80,Qt::KeepAspectRatio,Qt::SmoothTransformation));
     // resolve the prob
@@ -856,6 +891,20 @@ MainWindow::MainWindow(QWidget *parent) :
         }
     });
 
+    // once the TheButton::index is changed, the video will be played
+    connect(playlist, &QMediaPlaylist::currentIndexChanged, this, [=](int index) {
+        if (index != -1) {
+            this->initPic->hide();
+        }
+        if (TheButton::index != -1 && TheButton::index != index) {
+            outVideoList[TheButton::index]->title->setStyleSheet("background-color: rgb(29, 29, 29); color: #a2a2a2;");
+            outVideoList[TheButton::index]->duration->setStyleSheet("background-color: rgb(29, 29, 29); color: #a2a2a2;");
+        }
+        TheButton::index = index;
+        outVideoList[index]->duration->setStyleSheet("background-color: rgb(69, 69, 69); color: #a2a2a2; border-bottom-left-radius: 5px; border-bottom-right-radius: 5px;");
+        outVideoList[index]->title->setStyleSheet("background-color: rgb(69, 69, 69); color: #a2a2a2; border-top-left-radius: 5px; border-top-right-radius: 5px;");
+    });
+
     // when the terminate button is clicked, the video will be terminated
     connect(ui->terminateVideoButton, &QPushButton::clicked, this, [=]() {
         player->stop();
@@ -866,11 +915,13 @@ MainWindow::MainWindow(QWidget *parent) :
     // next video button clicked
     connect(ui->nextVideoButton, &QPushButton::clicked, this, [=]() {
         playlist->next();
+        TheButton::index = playlist->currentIndex();
     });
 
     // previous video button clicked
     connect(ui->previousVideoButton, &QPushButton::clicked, this, [=]() {
         playlist->previous();
+        TheButton::index = playlist->currentIndex();
     });
 
     // when the video progress slider is moved, the video will be moved to the position
@@ -885,18 +936,18 @@ MainWindow::MainWindow(QWidget *parent) :
         player->setPosition(ui->videoProgressSlider->value() * player->duration() / 100);
     });
 
-    // different speed button clicked
-    connect(actionSpeed1, &QAction::triggered, this, [=]() {
-        player->setPlaybackRate(0.5);
-    });
-    connect(actionSpeed2, &QAction::triggered, this, [=]() {
-        player->setPlaybackRate(1);
-    });
-    connect(actionSpeed3, &QAction::triggered, this, [=]() {
-        player->setPlaybackRate(1.5);
-    });
-    connect(actionSpeed4, &QAction::triggered, this, [=]() {
-        player->setPlaybackRate(2);
+    // when the volume button is clicked, the volume will be muted
+    connect(ui->volumeButton, &QPushButton::clicked, this, [=]() {
+        if (player->isMuted()) {
+            player->setMuted(false);
+            ui->volumeButton->setIcon(QIcon(":/res/image/volume-on.png"));
+            ui->volumeSlider->setValue(lastVolume);
+        } else {
+            lastVolume = ui->volumeSlider->value();
+            player->setMuted(true);
+            ui->volumeButton->setIcon(QIcon(":/res/image/volume-off.png"));
+            ui->volumeSlider->setValue(0);
+        }
     });
 
     // full screen button clicked, the player widget will be full screen
@@ -1038,13 +1089,11 @@ std::vector<TheButton *> MainWindow::getVideoList(std::string loc) {
 
 void MainWindow::showEditDurationBox() {
     if (TheButton::index == -1) {
-//            QMessageBox::warning(this, "Warning", "Please select a video first.");
         // a new message box
         auto *messageBox = new QMessageBox(ui->playArea);
         messageBox->setParent(ui->playArea);
         messageBox->setWindowTitle("Warning");
         messageBox->setText("Please select a video first.");
-
         // set the font color
         messageBox->setStyleSheet("QLabel{color:#A2A2A2;}");
         messageBox->setStandardButtons(QMessageBox::Ok);
@@ -1105,11 +1154,10 @@ void MainWindow::initSettingButton() {
 
     // menu list
     auto *menu = new QMenu(settingButton);
-    menu->setStyleSheet("QMenu{color:white;}");
+    // style sheet
+    menu->setStyleSheet("QMenu{background-color:#454545; color:#a2a2a2; border:1px solid #454545;}"
+                             "QMenu::item:selected{background-color:#696969; color:#a2a2a2; cursor: pointer;}");
     auto *languageMenu = new QMenu("Set Language", menu);
-    // set the font-color in the menu as all white
-    languageMenu->setStyleSheet("QMenu{color:white;}");
-
 
     languageMenu->addAction("English(US)");
     languageMenu->addSeparator();
@@ -1212,9 +1260,9 @@ void MainWindow::initSettingButton() {
     menu->addAction("Search");
     settingButton->setMenu(menu);
 
-    // set the icon
-    settingButton->setIcon(QIcon(":res/images/more.png"));
     settingButton->setIconSize(QSize(20, 20));
+    // set the icon
+    settingButton->setIcon(QIcon(":res/image/more.png"));
     // set the style
     settingButton->setStyleSheet("QPushButton{"
                                  "background-color:#616161;"
@@ -1236,6 +1284,9 @@ void MainWindow::initSettingButton() {
                                  "color:#DDDDDD;"
                                  "width:68px;"
                                  "height:17px;"
+                                 "}"
+                                 "QPushButton:menu-indicator{"
+                                 "image:none;"
                                  "}");
 }
 
@@ -1314,33 +1365,4 @@ void MainWindow::initWorkSpace() {
                                                        "QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {"
                                                        "background: none;"
                                                        "}");
-
-
-}
-
-void MainWindow::mouseMoveEvent(QMouseEvent *event) {
-    if (!cursorDisplay) {
-        return;
-    }
-    QWidget::mouseMoveEvent(event);
-
-    if (ui->playPlace->isFullScreen()) {
-        qDebug() << "full screen";
-        if (!cursorDisplay) {
-            qDebug() << "cursor display";
-            ui->playPlace->setCursor(Qt::ArrowCursor);
-            this->videoListWidget->show();
-            ui->bottomBar->show();
-            cursorDisplay = true;
-
-            return;
-        }
-        QTimer::singleShot(2000, this, [=]() {
-            qDebug() << cursorDisplay;
-            ui->playPlace->setCursor(Qt::BlankCursor);
-            ui->bottomBar->hide();
-            this->videoListWidget->hide();
-            cursorDisplay = false;
-        });
-    }
 }

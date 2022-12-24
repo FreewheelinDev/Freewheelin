@@ -214,9 +214,7 @@ margin-right:6px</string>
           <item>
            <widget class="QPushButton" name="speedButton">
             <property name="styleSheet">
-             <string notr="true">
-
-</string>
+             <string notr="true"/>
             </property>
             <property name="text">
              <string> 1.0x</string>
@@ -808,6 +806,18 @@ height:2px</string>
                  </item>
                  <item>
                   <widget class="QSlider" name="horizontalSlider">
+                   <property name="minimumSize">
+                    <size>
+                     <width>100</width>
+                     <height>0</height>
+                    </size>
+                   </property>
+                   <property name="maximumSize">
+                    <size>
+                     <width>100</width>
+                     <height>16777215</height>
+                    </size>
+                   </property>
                    <property name="orientation">
                     <enum>Qt::Horizontal</enum>
                    </property>
@@ -856,6 +866,18 @@ height:2px</string>
                  </item>
                  <item>
                   <widget class="QSlider" name="horizontalSlider_2">
+                   <property name="minimumSize">
+                    <size>
+                     <width>100</width>
+                     <height>0</height>
+                    </size>
+                   </property>
+                   <property name="maximumSize">
+                    <size>
+                     <width>100</width>
+                     <height>16777215</height>
+                    </size>
+                   </property>
                    <property name="styleSheet">
                     <string notr="true"/>
                    </property>
@@ -907,6 +929,12 @@ height:2px</string>
                  </item>
                  <item>
                   <widget class="QSlider" name="horizontalSlider_3">
+                   <property name="maximumSize">
+                    <size>
+                     <width>100</width>
+                     <height>16777215</height>
+                    </size>
+                   </property>
                    <property name="orientation">
                     <enum>Qt::Horizontal</enum>
                    </property>
@@ -1013,6 +1041,12 @@ height:2px</string>
               </item>
               <item>
                <widget class="QSlider" name="horizontalSlider_4">
+                <property name="maximumSize">
+                 <size>
+                  <width>100</width>
+                  <height>16777215</height>
+                 </size>
+                </property>
                 <property name="orientation">
                  <enum>Qt::Horizontal</enum>
                 </property>
@@ -1145,6 +1179,12 @@ height:2px</string>
                  </item>
                  <item>
                   <widget class="QSlider" name="horizontalSlider_5">
+                   <property name="maximumSize">
+                    <size>
+                     <width>100</width>
+                     <height>16777215</height>
+                    </size>
+                   </property>
                    <property name="orientation">
                     <enum>Qt::Horizontal</enum>
                    </property>
@@ -1187,6 +1227,12 @@ height:2px</string>
                  </item>
                  <item>
                   <widget class="QSlider" name="horizontalSlider_6">
+                   <property name="maximumSize">
+                    <size>
+                     <width>100</width>
+                     <height>16777215</height>
+                    </size>
+                   </property>
                    <property name="orientation">
                     <enum>Qt::Horizontal</enum>
                    </property>
@@ -1359,6 +1405,12 @@ height:2px</string>
                  </item>
                  <item>
                   <widget class="QSlider" name="horizontalSlider_7">
+                   <property name="maximumSize">
+                    <size>
+                     <width>100</width>
+                     <height>16777215</height>
+                    </size>
+                   </property>
                    <property name="orientation">
                     <enum>Qt::Horizontal</enum>
                    </property>
@@ -1401,6 +1453,18 @@ height:2px</string>
                  </item>
                  <item>
                   <widget class="QSlider" name="horizontalSlider_8">
+                   <property name="minimumSize">
+                    <size>
+                     <width>100</width>
+                     <height>0</height>
+                    </size>
+                   </property>
+                   <property name="maximumSize">
+                    <size>
+                     <width>100</width>
+                     <height>16777215</height>
+                    </size>
+                   </property>
                    <property name="orientation">
                     <enum>Qt::Horizontal</enum>
                    </property>
@@ -1424,7 +1488,7 @@ height:2px</string>
                  <item>
                   <widget class="QLabel" name="label_22">
                    <property name="text">
-                    <string>Contrast</string>
+                    <string>Contrast           </string>
                    </property>
                   </widget>
                  </item>
@@ -1445,7 +1509,7 @@ height:2px</string>
                   <widget class="QSlider" name="horizontalSlider_9">
                    <property name="minimumSize">
                     <size>
-                     <width>103</width>
+                     <width>100</width>
                      <height>0</height>
                     </size>
                    </property>

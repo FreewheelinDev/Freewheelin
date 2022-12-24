@@ -10,6 +10,7 @@
 #include <QFileDialog>
 #include <QMessageBox>
 #include <thread>
+#include <QThread>
 #include <QPainter>
 
 #include "MainWindow.h"
@@ -365,21 +366,38 @@ MainWindow::MainWindow(QWidget *parent) :
             player->setPlaylist(playlist);
             playlist->setCurrentIndex(0);
 
+
             for (int i = 0; i < outVideoList.size(); i++) {
                 videoButtonsLayout->addWidget(outVideoList[i]);
                 connect(outVideoList[i], &TheButton::clicked, this, [=]() {
+
                     playlist->setCurrentIndex(i);
+                    player->stop();
                     ui->topBarText->setText(outVideoList[i]->title->text());
+
                     QTimer::singleShot(50, this, [=]() {
                         player->play();
                     });
+
                     TheButton::index = playlist->currentIndex();
+                    // disable the button
+//                    for(int i = 0; i < outVideoList.size(); i++) {
+//                        outVideoList[i]->setEnabled(false);
+//                        QTimer::singleShot(51, this, [=](){
+//                            outVideoList[i]->setEnabled(true);
+//                        });
+//                    }
+                    QThread::msleep(50);
                     // hide the initPic
                     this->initPic->hide();
                 });
                 videoListScrollAreaWidget->setMinimumWidth(111 * (i + 1));
                 videoListScrollAreaWidget->setMaximumWidth(111 * (i + 1));
             }
+
+            QTimer::singleShot(50, this, [=]() {
+                player->play();
+            });
 
             // show the video list
             videoListWidget->show();
@@ -927,6 +945,12 @@ MainWindow::MainWindow(QWidget *parent) :
         player->stop();
         player->pause();
         ui->videoProgressSlider->setValue(0);
+
+        // disable the bottom bar
+        ui->bottomBar->setEnabled(false);
+        QTimer::singleShot(50, this, [=]() {
+            ui->bottomBar->setEnabled(true);
+        });
     });
 
     // next video button clicked
@@ -938,10 +962,10 @@ MainWindow::MainWindow(QWidget *parent) :
             player->play();
         });
         TheButton::index = playlist->currentIndex();
-        // disable the next button
-        ui->nextVideoButton->setEnabled(false);
-        QTimer::singleShot(51, this, [=](){
-            ui->nextVideoButton->setEnabled(true);
+        // disable the bottom bar
+        ui->bottomBar->setEnabled(false);
+        QTimer::singleShot(50, this, [=]() {
+            ui->bottomBar->setEnabled(true);
         });
     });
 
@@ -953,11 +977,22 @@ MainWindow::MainWindow(QWidget *parent) :
             player->play();
         });
         TheButton::index = playlist->currentIndex();
-        // disable the previous button
-        ui->previousVideoButton->setEnabled(false);
-        QTimer::singleShot(51, this, [=](){
-            ui->previousVideoButton->setEnabled(true);
+        // disable the bottom bar
+        ui->bottomBar->setEnabled(false);
+        QTimer::singleShot(50, this, [=]() {
+            ui->bottomBar->setEnabled(true);
         });
+    });
+
+    connect(ui->videoProgressSlider, &QSlider::valueChanged, this, [=](float value) {
+        if (value > 99) {
+            playlist->next();
+            player->stop();
+
+            QTimer::singleShot(50, this, [=](){
+                player->play();
+            });
+        }
     });
 
     // when the video progress slider is moved, the video will be moved to the position

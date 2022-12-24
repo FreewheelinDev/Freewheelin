@@ -1120,9 +1120,26 @@ MainWindow::MainWindow(QWidget *parent) :
             } else {
                 // show tip message
                 auto *msgBox = new QMessageBox(this);
+                msgBox->setStyleSheet("background-color:#232323; color: #A2A2A2;");
                 msgBox->setWindowTitle("Tip");
                 msgBox->setText("Please open a video first!");
                 msgBox->setStandardButtons(QMessageBox::Ok);
+                // style of the button
+                auto *okButton = msgBox->button(QMessageBox::Ok);
+                okButton->setStyleSheet("QPushButton{"
+                                          "background-color:#616161;"
+                                          "border-radius:5px;"
+                                          "color:#DDDDDD;"
+                                          "width:68px;"
+                                          "height:17px;"
+                                          "}"
+                                          "QPushButton:hover{"
+                                          "background-color: rgb(61, 62, 62);"
+                                          "border-radius:5px;"
+                                          "color:#DDDDDD;"
+                                          "width:68px;"
+                                          "height:17px;"
+                                          "}");
                 msgBox->move(this->x() + (this->width()) / 2 - msgBox->width() / 2 - 200,
                              (this->y() + TOP_BAR_HEIGHT) + (this->height() - TOP_BAR_HEIGHT - BOTTOM_BAR_HEIGHT) / 2 -
                              msgBox->height() / 2);

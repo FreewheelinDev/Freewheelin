@@ -933,10 +933,16 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->nextVideoButton, &QPushButton::clicked, this, [=]() {
         playlist->next();
         player->stop();
+        // wait for the resource to be released
         QTimer::singleShot(50, this, [=]() {
             player->play();
         });
         TheButton::index = playlist->currentIndex();
+        // disable the next button
+        ui->nextVideoButton->setEnabled(false);
+        QTimer::singleShot(51, this, [=](){
+            ui->nextVideoButton->setEnabled(true);
+        });
     });
 
     // previous video button clicked
@@ -947,6 +953,11 @@ MainWindow::MainWindow(QWidget *parent) :
             player->play();
         });
         TheButton::index = playlist->currentIndex();
+        // disable the previous button
+        ui->previousVideoButton->setEnabled(false);
+        QTimer::singleShot(51, this, [=](){
+            ui->previousVideoButton->setEnabled(true);
+        });
     });
 
     // when the video progress slider is moved, the video will be moved to the position

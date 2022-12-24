@@ -370,7 +370,9 @@ MainWindow::MainWindow(QWidget *parent) :
                 connect(outVideoList[i], &TheButton::clicked, this, [=]() {
                     playlist->setCurrentIndex(i);
                     ui->topBarText->setText(outVideoList[i]->title->text());
-                    player->play();
+                    QTimer::singleShot(50, this, [=]() {
+                        player->play();
+                    });
                     TheButton::index = playlist->currentIndex();
                     // hide the initPic
                     this->initPic->hide();
@@ -891,6 +893,21 @@ MainWindow::MainWindow(QWidget *parent) :
         }
     });
 
+    // if the video is playing, the pause icon will be shown
+    connect(player, &QMediaPlayer::stateChanged, this, [=](QMediaPlayer::State state) {
+        if (state == QMediaPlayer::PlayingState) {
+            ui->playVideoButton->setIcon(QIcon(":/res/image/pause.png"));
+            ui->playVideoButton->setIconSize(QSize(12, 12));
+            ui->playVideoButton->setStyleSheet("border-style:solid; border-width:1px; border-color:none;"
+                                               "border-radius: 5px; background-color:#505050;margin-right: 3px;width:36px;height:21px;");
+        } else {
+            ui->playVideoButton->setIcon(QIcon(":/res/image/play.png"));
+            ui->playVideoButton->setIconSize(QSize(12, 12));
+            ui->playVideoButton->setStyleSheet("border-style:solid; border-width:1px; border-color:none;"
+                                               "border-radius: 5px; background-color:#505050;margin-right: 3px;width:36px;height:21px;");
+        }
+    });
+
     // once the TheButton::index is changed, the video will be played
     connect(playlist, &QMediaPlaylist::currentIndexChanged, this, [=](int index) {
         if (index != -1) {
@@ -915,12 +932,20 @@ MainWindow::MainWindow(QWidget *parent) :
     // next video button clicked
     connect(ui->nextVideoButton, &QPushButton::clicked, this, [=]() {
         playlist->next();
+        player->stop();
+        QTimer::singleShot(50, this, [=]() {
+            player->play();
+        });
         TheButton::index = playlist->currentIndex();
     });
 
     // previous video button clicked
     connect(ui->previousVideoButton, &QPushButton::clicked, this, [=]() {
         playlist->previous();
+        player->stop();
+        QTimer::singleShot(50, this, [=]() {
+            player->play();
+        });
         TheButton::index = playlist->currentIndex();
     });
 
@@ -1106,14 +1131,14 @@ void MainWindow::showEditDurationBox() {
                                                            "height:17px;"
                                                            "}"
                                                            "QPushButton:hover{"
-                                                           "background-color:#616161;"
+                                                           "background-color:rgb(61, 62, 62);"
                                                            "border-radius:5px;"
                                                            "color:#DDDDDD;"
                                                            "width:68px;"
                                                            "height:17px;"
                                                            "}"
                                                            "QPushButton:pressed{"
-                                                           "background-color:#616161;"
+                                                           "background-color:rgb(61, 62, 62);"
                                                            "border-radius:5px;"
                                                            "color:#DDDDDD;"
                                                            "width:68px;"

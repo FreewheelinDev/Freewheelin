@@ -58,47 +58,35 @@ EditDurationBox::EditDurationBox(const QString &duration, QWidget *parent) : QDi
     auto *buttonArea = new QWidget(this);
     auto *buttonLayout = new QHBoxLayout(buttonArea);
     auto *spacerItem = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
-    auto *cancelButton = new QPushButton("Cancel", buttonArea);
     auto *saveButton = new QPushButton("Save", buttonArea);
+    auto *cancelButton = new QPushButton("Cancel", buttonArea);
 
-    // set the save and cancel button style
-    cancelButton->setStyleSheet("QPushButton{"
-                                "background-color:#616161;"
-                                "border-radius:5px;"
-                                "color:#DDDDDD;"
-                                "width:68px;"
-                                "height:17px;"
-                                "}"
-                                "QPushButton:hover{"
-                                "background-color:#616161;"
-                                "border-radius:5px;"
-                                "color:#DDDDDD;"
-                                "width:68px;"
-                                "height:17px;"
-                                "}"
-                                "QPushButton:pressed{"
-                                "background-color:#616161;"
-                                "border-radius:5px;"
-                                "color:#DDDDDD;"
-                                "width:68px;"
-                                "height:17px;"
-                                "}");
     saveButton->setStyleSheet("QPushButton{"
                                 "background-color:#616161;"
                                 "border-radius:5px;"
                                 "color:#DDDDDD;"
                                 "width:68px;"
                                 "height:17px;"
+                                "cursor: pointer;"
                                 "}"
                                 "QPushButton:hover{"
-                                "background-color:#616161;"
+                                "background-color: rgb(61, 62, 62);"
                                 "border-radius:5px;"
                                 "color:#DDDDDD;"
                                 "width:68px;"
                                 "height:17px;"
+                                "cursor: pointer;"
+                                "}");
+    // set the save and cancel button style
+    cancelButton->setStyleSheet("QPushButton{"
+                                "background-color:#1373E6;"
+                                "border-radius:5px;"
+                                "color:white;"
+                                "width:68px;"
+                                "height:17px;"
                                 "}"
-                                "QPushButton:pressed{"
-                                "background-color:#616161;"
+                                "QPushButton:hover{"
+                                "background-color:#0F66d0;"
                                 "border-radius:5px;"
                                 "color:#DDDDDD;"
                                 "width:68px;"

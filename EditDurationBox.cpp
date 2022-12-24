@@ -67,7 +67,6 @@ EditDurationBox::EditDurationBox(const QString &duration, QWidget *parent) : QDi
                                 "color:#DDDDDD;"
                                 "width:68px;"
                                 "height:17px;"
-                                "cursor: pointer;"
                                 "}"
                                 "QPushButton:hover{"
                                 "background-color: rgb(61, 62, 62);"
@@ -75,7 +74,6 @@ EditDurationBox::EditDurationBox(const QString &duration, QWidget *parent) : QDi
                                 "color:#DDDDDD;"
                                 "width:68px;"
                                 "height:17px;"
-                                "cursor: pointer;"
                                 "}");
     // set the save and cancel button style
     cancelButton->setStyleSheet("QPushButton{"

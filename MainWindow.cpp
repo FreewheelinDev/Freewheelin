@@ -61,27 +61,38 @@ MainWindow::MainWindow(QWidget *parent) :
     // set border raidus and color #45454545
     ui->videoListButton->setIcon(QIcon(":/res/image/toggle-list.png"));
     ui->videoListButton->setIconSize(QSize(12, 12));
-    ui->videoListButton->setStyleSheet("border-style:solid; border-width:1px; border-color:none;"
-                                       "border-radius: 5px; background-color:#454545;margin-right: 3px;width:36px;height:21px;");
-
+    ui->videoListButton->setStyleSheet("QPushButton{border-style:solid; border-width:1px; border-color:none;"
+                                       "            border-radius: 5px; background-color:#454545;margin-right: 3px;width:36px;height:21px;}"
+                                       "QPushButton:hover{border-style:solid; border-width:1px; border-color:none;"
+                                       "border-radius: 5px; background-color:rgb(61, 62, 62);margin-right: 3px;width:36px;height:21px;}");
+    ui->videoListButton->setCursor(Qt::PointingHandCursor);
 
     ui->previousVideoButton->setIcon(QIcon(":/res/image/prev-video.png"));
     ui->previousVideoButton->setIconSize(QSize(12, 12));
-    ui->previousVideoButton->setStyleSheet("border-style:solid; border-width:1px; border-color:none;"
-                                           "border-radius: 5px; background-color:#454545;margin-right: 3px;width:36px;height:21px;");
+    ui->previousVideoButton->setStyleSheet("QPushButton{border-style:solid; border-width:1px; border-color:none;"
+                                           "border-radius: 5px; background-color:#454545;margin-right: 3px;width:36px;height:21px;}"
+                                           "QPushButton:hover{border-style:solid; border-width:1px; border-color:none;"
+                                           "border-radius: 5px; background-color:rgb(61, 62, 62);margin-right: 3px;width:36px;height:21px;}");
+    ui->previousVideoButton->setCursor(Qt::PointingHandCursor);
 
 
     // set the bg img for play button
     ui->playVideoButton->setIcon(QIcon(":/res/image/play.png"));
     // set the icon size
     ui->playVideoButton->setIconSize(QSize(12, 12));
-    ui->playVideoButton->setStyleSheet("border-style:solid; border-width:1px; border-color:none;"
-                                       "border-radius: 5px; background-color:#505050;margin-right: 3px;width:36px;height:21px;");
+    ui->playVideoButton->setStyleSheet("QPushButton{border-style:solid; border-width:1px; border-color:none;"
+                                       "border-radius: 5px; background-color:#454545;margin-right: 3px;width:36px;height:21px;}"
+                                       "QPushButton:hover{border-style:solid; border-width:1px; border-color:none;"
+                                       "border-radius: 5px; background-color:rgb(61, 62, 62);margin-right: 3px;width:36px;height:21px;}");
+    ui->playVideoButton->setCursor(Qt::PointingHandCursor);
 
     ui->nextVideoButton->setIcon(QIcon(":/res/image/next-video.png"));
     ui->nextVideoButton->setIconSize(QSize(12, 12));
-    ui->nextVideoButton->setStyleSheet("border-style:solid; border-width:1px; border-color:none;"
-                                       "border-radius: 5px; background-color:#454545;margin-right: 3px;width:36px;height:21px;");
+    ui->nextVideoButton->setStyleSheet("QPushButton{border-style:solid; border-width:1px; border-color:none;"
+                                       "border-radius: 5px; background-color:#454545;margin-right: 3px;width:36px;height:21px;}"
+                                       "QPushButton:hover{border-style:solid; border-width:1px; border-color:none;"
+                                       "border-radius: 5px; background-color:rgb(61, 62, 62);margin-right: 3px;width:36px;height:21px;}");
+    ui->nextVideoButton->setCursor(Qt::PointingHandCursor);
 
 
     // volume button is a square
@@ -89,26 +100,42 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->volumeButton->setIconSize(QSize(12, 12));
     ui->volumeButton->setStyleSheet("border-style:solid; border-width:1px; border-color:none;"
                                     "border-radius: 5px; background-color:#454545;margin-right: 3px;width: 20px;height: 20px;");
+    ui->volumeButton->setStyleSheet("QPushButton{border-style:solid; border-width:1px; border-color:none;"
+                                    "border-radius: 5px; background-color:#454545;margin-right: 3px;width: 20px;height: 20px;}"
+                                    "QPushButton:hover{border-style:solid; border-width:1px; border-color:none;"
+                                    "border-radius: 5px; background-color:rgb(61, 62, 62);margin-right: 3px;width: 20px;height: 20px;}");
+    ui->volumeButton->setCursor(Qt::PointingHandCursor);
 
 
     ui->fullScreenButton->setIcon(QIcon(":/res/image/full-screen.png"));
     ui->fullScreenButton->setIconSize(QSize(12, 12));
     ui->fullScreenButton->setStyleSheet("border-style:solid; border-width:1px; border-color:none;"
                                         "border-radius: 5px; background-color:#454545;margin-left: 5px;width: 20px;height: 20px;");
+    ui->fullScreenButton->setStyleSheet("QPushButton{border-style:solid; border-width:1px; border-color:none;"
+                                        "border-radius: 5px; background-color:#454545;margin-left: 5px;width: 20px;height: 20px;}"
+                                        "QPushButton:hover{border-style:solid; border-width:1px; border-color:none;"
+                                        "border-radius: 5px; background-color:rgb(61, 62, 62);margin-left: 5px;width: 20px;height: 20px;}");
+    ui->fullScreenButton->setCursor(Qt::PointingHandCursor);
 
     ui->speedButton->setStyleSheet("QPushButton{"
                                    "color: #a2a2a2; border-color:none;"
                                    "border-radius: 5px; background-color:#454545;margin-right: 3px; min-width: 38px; min-height: 20px;}"
-                                   "QPushButton::menu-indicator{image: none;}");
+                                   "QPushButton::menu-indicator{image: none;}"
+                                   "QPushButton:hover{"
+                                   "color: #a2a2a2; border-color:none;"
+                                   "border-radius: 5px; background-color:rgb(61, 62, 62);margin-right: 3px; min-width: 38px; min-height: 20px;}");
+    ui->speedButton->setCursor(Qt::PointingHandCursor);
 
 
 
     // ///////////// play related buttons ///////////////
     ui->terminateVideoButton->setIcon(QIcon(":/res/image/terminate_play.png"));
     ui->terminateVideoButton->setIconSize(QSize(8, 8));
-    ui->terminateVideoButton->setStyleSheet("border-style:solid; border-width:1px; border-color:none;"
-                                            "border-radius: 5px; background-color:#454545;margin-right: 10px;width:21px;height:21px;");
-    // set the border radius of the video list button
+    ui->terminateVideoButton->setStyleSheet("QPushButton{border-style:solid; border-width:1px; border-color:none;"
+                                            "border-radius: 5px; background-color:#454545;margin-right: 10px;width:21px;height:21px;}"
+                                            "QPushButton:hover{border-style:solid; border-width:1px; border-color:none;"
+                                            "border-radius: 5px; background-color:rgb(61, 62, 62);margin-right: 10px;width:21px;height:21px;}");
+    ui->terminateVideoButton->setCursor(Qt::PointingHandCursor);
 
 
 
@@ -182,6 +209,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     // set the export button's widget
     ui->exportButtonWidget->setFixedHeight(BOTTOM_BAR_HEIGHT);
+
 
     // initialize the video list widget
     videoListWidget = new QWidget(this);
@@ -408,6 +436,7 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(clearAllButton, &QPushButton::clicked, this, [=]() {
         if (outVideoList.empty()) {
             auto *msgBox = new QMessageBox(this);
+            msgBox->setStyleSheet("background-color:#232323; color: #A2A2A2;");
             msgBox->setText("No video in the list");
             msgBox->setWindowTitle("Tip");
             msgBox->setStandardButtons(QMessageBox::Ok);
@@ -423,6 +452,7 @@ MainWindow::MainWindow(QWidget *parent) :
         // a model dialog to ensure the user's operation
         QMessageBox::StandardButton reply;
         auto *messageBox = new QMessageBox(this);
+        messageBox->setStyleSheet("background-color:#232323; color: #A2A2A2;");
         messageBox->setWindowTitle("Clear Video List");
         messageBox->setText("Are you sure to clear the video list?");
         messageBox->setStandardButtons(QMessageBox::Yes | QMessageBox::No);
@@ -430,6 +460,32 @@ MainWindow::MainWindow(QWidget *parent) :
         messageBox->move(this->x() + (this->width()) / 2 - messageBox->width() / 2 - 240,
                          (this->y() + TOP_BAR_HEIGHT) + (this->height() - TOP_BAR_HEIGHT - BOTTOM_BAR_HEIGHT) / 2 -
                          messageBox->height() / 2);
+        // set style of the button
+        messageBox->button(QMessageBox::Yes)->setStyleSheet("background-color:#616161;"
+                                                            "border-radius:5px;"
+                                                            "color:#DDDDDD;"
+                                                            "width:68px;"
+                                                            "height:17px;"
+                                                            "}"
+                                                            "QPushButton:hover{"
+                                                            "background-color: rgb(61, 62, 62);"
+                                                            "border-radius:5px;"
+                                                            "color:#DDDDDD;"
+                                                            "width:68px;"
+                                                            "height:17px;"
+                                                            );
+        messageBox->button(QMessageBox::No)->setStyleSheet("background-color:#1373E6;"
+                                                           "border-radius:5px;"
+                                                           "color:white;"
+                                                           "width:68px;"
+                                                           "height:17px;"
+                                                           "}"
+                                                           "QPushButton:hover{"
+                                                           "background-color:#0F66d0;"
+                                                           "border-radius:5px;"
+                                                           "color:#DDDDDD;"
+                                                           "width:68px;"
+                                                           "height:17px;");
         reply = static_cast<QMessageBox::StandardButton>(messageBox->exec());
         if (reply == QMessageBox::Yes) {
             playlist->clear();
@@ -787,20 +843,21 @@ MainWindow::MainWindow(QWidget *parent) :
             "height:17px;"
             "}"
             "QPushButton:hover{"
-            "background-color:#535353;"
+            "background-color:rgb(61, 62, 62);"
             "border-radius:5px;"
 
             "width:68px;"
             "height:17px;"
             "}"
             "QPushButton:pressed{"
-            "background-color:#535353;"
+            "background-color:rgb(61, 62, 62);"
             "border-radius:5px;"
 
             "width:68px;"
             "height:17px;"
             "}"
     );
+    ui->ExportpushButton->setCursor(Qt::PointingHandCursor);
 
     // set label image and size with 100X100 high resolution using smooth transformation
     //    ui->label_5->setPixmap(QPixmap(":/res/image/test.png").scaled(80,80,Qt::KeepAspectRatio,Qt::SmoothTransformation));
@@ -1343,14 +1400,14 @@ void MainWindow::initSettingButton() {
                                  "height:17px;"
                                  "}"
                                  "QPushButton:hover{"
-                                 "background-color:#616161;"
+                                 "background-color:rgb(61, 62, 62);"
                                  "border-radius:5px;"
                                  "color:#DDDDDD;"
                                  "width:68px;"
                                  "height:17px;"
                                  "}"
                                  "QPushButton:pressed{"
-                                 "background-color:#616161;"
+                                 "background-color:rgb(61, 62, 62);"
                                  "border-radius:5px;"
                                  "color:#DDDDDD;"
                                  "width:68px;"

@@ -12,9 +12,9 @@
 #include "ThePlayer.h"
 
 #define TOP_BAR_HEIGHT 30
-#define BOTTOM_BAR_HEIGHT 30
+#define BOTTOM_BAR_HEIGHT 40
 #define WORKPLACE_WIDTH 280
-#define VIDEO_LIST_WIDGET 120
+#define VIDEO_LIST_WIDGET 122
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }

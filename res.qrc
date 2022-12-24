@@ -1,8 +1,13 @@
 <RCC>
     <qresource prefix="/">
         <file>res/image/terminate.png</file>
-        <file>res/image/home_tag.png</file>
+        <file>res/image/cool-area.png</file>
         <file>res/image/banner.png</file>
         <file>res/image/banner-area.png</file>
+        <file>res/image/pause.png</file>
+        <file>res/image/color-span.png</file>
+        <file>res/image/test.png</file>
+        <file>res/image/extractor.png</file>
+        <file>res/image/extractor.svg</file>
     </qresource>
 </RCC>

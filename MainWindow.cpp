@@ -26,6 +26,7 @@ MainWindow::MainWindow(QWidget *parent) :
     // remove the status/menu bar to adapt the tablet
     this->setStatusBar(nullptr);
     this->setMenuBar(nullptr);
+    this->setWindowTitle("FreeWheelin Studio");
 
     // set the minimum size of the window
     this->setMinimumSize(1024, 768);  // 1024x768 is the size of ipad mini(7.9 inch)
@@ -39,12 +40,13 @@ MainWindow::MainWindow(QWidget *parent) :
     // initialize the work space
     initWorkSpace();
 
+
     // set the height of the top bar, the bottom bar fixed; set background color
     ui->topBar->setFixedHeight(TOP_BAR_HEIGHT);
     ui->bottomBar->setFixedHeight(BOTTOM_BAR_HEIGHT);
     ui->topBar->setStyleSheet("background-color:#232323;");
     // top bar lower border-line as black
-    ui->topBar->setStyleSheet("border-bottom: 1px solid black;");
+
     ui->bottomBar->setStyleSheet("background-color:#232323");
 
 
@@ -54,27 +56,43 @@ MainWindow::MainWindow(QWidget *parent) :
 
     // ///////////// play related buttons ///////////////
 
-    ui->videoListButton->setStyleSheet("background-color:#454545;");
+//    ui->videoListButton->setStyleSheet("background-color:#454545;");
+    // set border raidus and color #45454545
+    ui->videoListButton->setStyleSheet("border-style:solid; border-width:1px; border-color:none;"
+                                       "border-radius: 5px; background-color:#454545;margin-right: 3px;");
 
-    ui->previousVideoButton->setStyleSheet("background-color:#454545;");
 
-    ui->playVideoButton->setStyleSheet("background-color:#505050;");
 
-    ui->nextVideoButton->setStyleSheet("background-color:#454545;");
+    // apply same style
+    ui->previousVideoButton->setStyleSheet("border-style:solid; border-width:1px; border-color:none;"
+                                           "border-radius: 5px; background-color:#454545;margin-right: 3px;");
+    // set the bg img for play button
+    ui->playVideoButton->setIcon(QIcon(":/res/image/pause.png"));
+    // set the icon size
+    ui->playVideoButton->setIconSize(QSize(12, 12));
+    ui->playVideoButton->setStyleSheet("border-style:solid; border-width:1px; border-color:none;"
+                                       "border-radius: 5px; background-color:#505050;margin-right: 3px;width:36px;height:21px;");
 
-    ui->volumeButton->setStyleSheet("background-color:#454545;");
+    ui->nextVideoButton->setStyleSheet("border-style:solid; border-width:1px; border-color:none;"
+                                       "border-radius: 5px; background-color:#454545;margin-right: 3px;");
 
-    ui->speedButton->setStyleSheet("background-color:#454545;");
-    // bug here the border radius is not working
+//    ui->volumeButton->setStyleSheet("border-style:solid; border-width:1px; border-color:none;"
+//                                    "border-radius: 5px; background-color:#454545;margin-right: 3px;");
+    // volume button is a square
+    ui->volumeButton->setStyleSheet("border-style:solid; border-width:1px; border-color:none;"
+                                    "border-radius: 0px; background-color:#454545;margin-right: 3px;width: 20px;height: 20px;");
+    ui->fullScreenButton->setStyleSheet("border-style:solid; border-width:1px; border-color:none;"
+                                        "border-radius: 0px; background-color:#454545;margin-left: 5px;width: 20px;height: 20px;");
+    ui->speedButton->setStyleSheet("border-style:solid; border-width:1px; border-color:none;"
+                                   "border-radius: 5px; background-color:#454545;margin-right: 3px;");
+
 
 
     // ///////////// play related buttons ///////////////
 
-
-    ui->terminateVideoButton->setStyleSheet("background-color:#454545;");
+    ui->terminateVideoButton->setStyleSheet("border-style:solid; border-width:1px; border-color:none;"
+                                            "border-radius: 5px; background-color:#454545;margin-right: 10px;");
     // set the border radius of the video list button
-
-
 
 
 
@@ -85,27 +103,27 @@ MainWindow::MainWindow(QWidget *parent) :
     // Adobe PR style slider
     ui->videoProgressSlider->setStyleSheet(
             "QSlider::groove:horizontal {"
-            "height: 5px;"
+            "height: 6px;"
             "border:1px;"
-            "border-radius: 6px;"
+            "border-radius: 2px;"
             "background: #3D3E3E;"
-            "}"
-            "QSlider::handle:horizontal {"
-            "background:#E7E5E8;"
-            "border: 1px solid #5c5c5c;"
-            "width: 2px;"
-            "margin-top: -18px;"
-            "margin-bottom: -18px;"
-            "border-radius: 1px;"
 
             "}"
-            "QSlider::sub-page:horizontal {"
-//           more white than the groove
-            "background:#565656;"
-            "height: 5px;"
-            "border:1px;"
+
+            "QSlider::handle:horizontal {"
+            "background:#E7E5E8;"
+            "width: 2px;"
+            "height: 13px;"
+            "margin-top: -18px;"
+            "margin-bottom: -18px;"
             "border-radius: 6px;"
-            // radius does not work
+            "}"
+
+            "QSlider::sub-page:horizontal {"
+            "background:#565656;"
+            "height: 6px;"
+            "border: 1px;"
+            "border-radius: 2px;"
             "}"
     );
 
@@ -199,20 +217,21 @@ MainWindow::MainWindow(QWidget *parent) :
 
     ui->volumeSlider->setStyleSheet(
             "QSlider::groove:horizontal {"
-            "height: 6px;"
+            "height: 4px;"
             "border:1px;"
             "border-radius: 2px;"
             "background: #3D3E3E;"
             "}"
+
             "QSlider::handle:horizontal {"
             "background:#E7E5E8;"
-
             "width: 2px;"
             "height: 13px;"
             "margin-top: -18px;"
             "margin-bottom: -18px;"
             "border-radius: 6px;"
             "}"
+
             "QSlider::sub-page:horizontal {"
             "background:#565656;"
             "height: 6px;"
@@ -341,23 +360,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     // ////////////////workspace styling //////////////////////////
     // bg #616161 text #A2A2A2 border-radius 5px
-    ui->effectButton->setStyleSheet("QPushButton{"
-                                    "background-color:#616161;"
-                                    "border-radius:5px;"
-                                    "color:#A2A2A2;"
-                                    "}"
-                                    "QPushButton:hover{"
-                                    "background-color:#616161;"
-                                    "border-radius:5px;"
-                                    "color:#A2A2A2;"
-                                    "}"
-                                    "QPushButton:pressed{"
-                                    "background-color:#616161;"
-                                    "border-radius:5px;"
-                                    "color:#A2A2A2;"
-                                    "}"
-    );
-    ui->effectButton->setCursor(Qt::PointingHandCursor);
+
     // bg #616161 text #A2A2A2 border-radius 5px apple style width 80px,height 23px
     ui->addTextureButton->setStyleSheet("QPushButton{"
                                         "background-color:#616161;"
@@ -382,24 +385,6 @@ MainWindow::MainWindow(QWidget *parent) :
                                         "}"
     );
     ui->addTextureButton->setCursor(Qt::PointingHandCursor);
-    ui->lumetriButton->setStyleSheet(
-            "QPushButton{"
-            "background-color:#616161;"
-            "border-radius:5px;"
-            "color:#A2A2A2;"
-            "}"
-            "QPushButton:hover{"
-            "background-color:#616161;"
-            "border-radius:5px;"
-            "color:#A2A2A2;"
-            "}"
-            "QPushButton:pressed{"
-            "background-color:#616161;"
-            "border-radius:5px;"
-            "color:#A2A2A2;"
-            "}"
-    );
-    ui->lumetriButton->setCursor(Qt::PointingHandCursor);
 
     ui->lumetriPresetButton->setStyleSheet(
             "QPushButton{"
@@ -476,14 +461,18 @@ MainWindow::MainWindow(QWidget *parent) :
 
                                              "}"
     );
+    ui->videoTransitionButton->setCursor(Qt::PointingHandCursor);
     ui->videoEffectsButton->setCursor(Qt::PointingHandCursor);
     // the same style as the volume slider however the sub page color is more bright
 
+
+    // ////////////// AlL SLIDER STYLE SETTER  ////////////////
+    // ////////////// LONG REPEATED CODE NOTICE ////////////////
     ui->horizontalSlider->setStyleSheet(
             "QSlider::groove:horizontal {"
-             "height: 3px;"
+             "height: 4px;"
              "border:1px;"
-             "border-radius: 5px;"
+             "border-radius: 2px;"
              "background: #3D3E3E;"
              "}"
              "QSlider::handle:horizontal {"
@@ -492,63 +481,328 @@ MainWindow::MainWindow(QWidget *parent) :
              "width: 2px;"
              "margin-top: -5px;"
              "margin-bottom: -5px;"
-             "border-radius: 5px;"
+             "border-radius: 1px;"
              "}"
              "QSlider::sub-page:horizontal {"
-             "background:#FFFFFF;"
-             "height: 3px;"
+             "background:#AFB1B3;"
+             "height: 4px;"
              "border:1px;"
-             "border-radius: 5px;"
+             "border-radius: 2px;"
              "}"
     );
-
-    ui->pushButton_2->setStyleSheet("QPushButton{"
-                                    "background-color:#616161;"
-                                    "border-radius:5px;"
-                                    "color:#DDDDDD;"
-                                    "width:28px;"
-                                    "height:17px;"
-                                    "}"
-                                    "QPushButton:hover{"
-                                    "background-color:#616161;"
-                                    "border-radius:5px;"
-                                    "color:#DDDDDD;"
-                                    "width:28px;"
-                                    "height:17px;"
-                                    "}"
-                                    "QPushButton:pressed{"
-                                    "background-color:#616161;"
-                                    "border-radius:5px;"
-                                    "color:#DDDDDD;"
-                                    "width:28px;"
-                                    "height:17px;"
-                                    "}"
+    ui->horizontalSlider->setCursor(Qt::PointingHandCursor);
+    ui->horizontalSlider_2->setCursor(Qt::PointingHandCursor);
+    ui->horizontalSlider_2->setStyleSheet(
+            "QSlider::groove:horizontal {"
+             "height: 4px;"
+             "border:1px;"
+             "border-radius: 2px;"
+             "background: #3D3E3E;"
+             "}"
+             "QSlider::handle:horizontal {"
+             "background:#E7E5E8;"
+             "border: 1px solid #5c5c5c;"
+             "width: 2px;"
+             "margin-top: -5px;"
+             "margin-bottom: -5px;"
+             "border-radius: 1px;"
+             "}"
+             "QSlider::sub-page:horizontal {"
+             "background:#AFB1B3;"
+             "height: 4px;"
+             "border:1px;"
+             "border-radius: 2px;"
+             "}"
     );
+    ui->horizontalSlider_3->setCursor(Qt::PointingHandCursor);
+    ui->horizontalSlider_3->setStyleSheet(
+            "QSlider::groove:horizontal {"
+             "height: 4px;"
+             "border:1px;"
+             "border-radius: 2px;"
+             "background: #3D3E3E;"
+             "}"
+             "QSlider::handle:horizontal {"
+             "background:#E7E5E8;"
+             "border: 1px solid #5c5c5c;"
+             "width: 2px;"
+             "margin-top: -5px;"
+             "margin-bottom: -5px;"
+             "border-radius: 1px;"
+             "}"
+             "QSlider::sub-page:horizontal {"
+             "background:#AFB1B3;"
+             "height: 4px;"
+             "border:1px;"
+             "border-radius: 2px;"
+             "}"
+    );
+    ui->horizontalSlider_4->setCursor(Qt::PointingHandCursor);
+    ui->horizontalSlider_4->setStyleSheet(
+            "QSlider::groove:horizontal {"
+             "height: 4px;"
+             "border:1px;"
+             "border-radius: 2px;"
+             "background: #3D3E3E;"
+             "}"
+             "QSlider::handle:horizontal {"
+             "background:#E7E5E8;"
+             "border: 1px solid #5c5c5c;"
+             "width: 2px;"
+             "margin-top: -5px;"
+             "margin-bottom: -5px;"
+             "border-radius: 1px;"
+             "}"
+             "QSlider::sub-page:horizontal {"
+             "background:#AFB1B3;"
+             "height: 4px;"
+             "border:1px;"
+             "border-radius: 2px;"
+             "}"
+    );
+    ui->horizontalSlider_5->setCursor(Qt::PointingHandCursor);
+    ui->horizontalSlider_5->setStyleSheet(
+            "QSlider::groove:horizontal {"
+             "height: 4px;"
+             "border:1px;"
+             "border-radius: 2px;"
+             "background: #3D3E3E;"
+             "}"
+             "QSlider::handle:horizontal {"
+             "background:#E7E5E8;"
+             "border: 1px solid #5c5c5c;"
+             "width: 2px;"
+             "margin-top: -5px;"
+             "margin-bottom: -5px;"
+             "border-radius: 1px;"
+             "}"
+             "QSlider::sub-page:horizontal {"
+             "background:#AFB1B3;"
+             "height: 4px;"
+             "border:1px;"
+             "border-radius: 2px;"
+             "}"
+    );
+    ui->horizontalSlider_6->setCursor(Qt::PointingHandCursor);
+    ui->horizontalSlider_6->setStyleSheet(
+            "QSlider::groove:horizontal {"
+             "height: 4px;"
+             "border:1px;"
+             "border-radius: 2px;"
+             "background: #3D3E3E;"
+             "}"
+             "QSlider::handle:horizontal {"
+             "background:#E7E5E8;"
+             "border: 1px solid #5c5c5c;"
+             "width: 2px;"
+             "margin-top: -5px;"
+             "margin-bottom: -5px;"
+             "border-radius: 1px;"
+             "}"
+             "QSlider::sub-page:horizontal {"
+             "background:#AFB1B3;"
+             "height: 4px;"
+             "border:1px;"
+             "border-radius: 2px;"
+             "}"
+    );
+    ui->horizontalSlider_7->setCursor(Qt::PointingHandCursor);
+    ui->horizontalSlider_7->setStyleSheet(
+            "QSlider::groove:horizontal {"
+             "height: 4px;"
+             "border:1px;"
+             "border-radius: 2px;"
+             "background: #3D3E3E;"
+             "}"
+             "QSlider::handle:horizontal {"
+             "background:#E7E5E8;"
+             "border: 1px solid #5c5c5c;"
+             "width: 2px;"
+             "margin-top: -5px;"
+             "margin-bottom: -5px;"
+             "border-radius: 1px;"
+             "}"
+             "QSlider::sub-page:horizontal {"
+             "background:#AFB1B3;"
+             "height: 4px;"
+             "border:1px;"
+             "border-radius: 2px;"
+             "}"
+    );
+    ui->horizontalSlider_8->setCursor(Qt::PointingHandCursor);
+    ui->horizontalSlider_8->setStyleSheet(
+            "QSlider::groove:horizontal {"
+             "height: 4px;"
+             "border:1px;"
+             "border-radius: 2px;"
+             "background: #3D3E3E;"
+             "}"
+             "QSlider::handle:horizontal {"
+             "background:#E7E5E8;"
+             "border: 1px solid #5c5c5c;"
+             "width: 2px;"
+             "margin-top: -5px;"
+             "margin-bottom: -5px;"
+             "border-radius: 1px;"
+             "}"
+             "QSlider::sub-page:horizontal {"
+             "background:#AFB1B3;"
+             "height: 4px;"
+             "border:1px;"
+             "border-radius: 2px;"
+             "}"
+    );
+    ui->horizontalSlider_9->setCursor(Qt::PointingHandCursor);
+    ui->horizontalSlider_9->setStyleSheet(
+            "QSlider::groove:horizontal {"
+             "height: 4px;"
+             "border:1px;"
+             "border-radius: 2px;"
+             "background: #3D3E3E;"
+             "}"
+             "QSlider::handle:horizontal {"
+             "background:#E7E5E8;"
+             "border: 1px solid #5c5c5c;"
+             "width: 2px;"
+             "margin-top: -5px;"
+             "margin-bottom: -5px;"
+             "border-radius: 1px;"
+             "}"
+             "QSlider::sub-page:horizontal {"
+             "background:#AFB1B3;"
+             "height: 4px;"
+             "border:1px;"
+             "border-radius: 2px;"
+             "}"
+    );
+    // ////////////// AlL SLIDER STYLE SETTER END ////////////////
+
+
     // ////////////////workspace styling end //////////////////////////
-// bg color#6C757D
+
     ui->ExportpushButton->setStyleSheet(
             "QPushButton{"
-            "background-color:#FFC107;"
+            "color:#A2A2A2;"
+            "background-color:#535353;"
             "border-radius:5px;"
-
             "width:68px;"
             "height:17px;"
             "}"
             "QPushButton:hover{"
-            "background-color:#FFC107;"
+            "background-color:#535353;"
             "border-radius:5px;"
 
             "width:68px;"
             "height:17px;"
             "}"
             "QPushButton:pressed{"
-            "background-color:#FFC107;"
+            "background-color:#535353;"
             "border-radius:5px;"
 
             "width:68px;"
             "height:17px;"
             "}"
     );
+    // set label image and size with 100X100 high resolution using smooth transformation
+    //    ui->label_5->setPixmap(QPixmap(":/res/image/test.png").scaled(80,80,Qt::KeepAspectRatio,Qt::SmoothTransformation));
+    // resolve the prob
+    // set the image, and use qpainter to avoid the problem of image not clear
+    QPixmap pixmap(":/res/image/test.png");
+    QPixmap fitpixmap=pixmap.scaled(80,80,Qt::KeepAspectRatio,Qt::SmoothTransformation);
+    QPixmap finalPixmap(80,80);
+    finalPixmap.fill(Qt::transparent);
+    QPainter painter(&finalPixmap);
+    painter.setRenderHint(QPainter::Antialiasing);
+    painter.setRenderHint(QPainter::SmoothPixmapTransform);
+    painter.drawPixmap(0,0,80,80,fitpixmap);
+    ui->label_5->setPixmap(finalPixmap);
+    // set the image, and use qpainter to avoid the problem of image not clear
+    // for label_6 set the same image
+    QPixmap pixmap1(":/res/image/test.png");
+    QPixmap fitpixmap1=pixmap1.scaled(80,80,Qt::KeepAspectRatio,Qt::SmoothTransformation);
+    QPixmap finalPixmap1(80,80);
+    finalPixmap1.fill(Qt::transparent);
+    QPainter painter1(&finalPixmap1);
+    painter1.setRenderHint(QPainter::Antialiasing);
+    painter1.setRenderHint(QPainter::SmoothPixmapTransform);
+    painter1.drawPixmap(0,0,80,80,fitpixmap1);
+    ui->label_7->setPixmap(finalPixmap1);
+    // set the image, and use qpainter to avoid the problem of image not clear
+    // for label_11 set the same image
+    QPixmap pixmap2(":/res/image/cool-area.png");
+    QPixmap fitpixmap2=pixmap2.scaled(228,130,Qt::KeepAspectRatio,Qt::SmoothTransformation);
+    QPixmap finalPixmap2(228,130);
+    finalPixmap2.fill(Qt::transparent);
+    QPainter painter2(&finalPixmap2);
+    painter2.setRenderHint(QPainter::Antialiasing);
+    painter2.setRenderHint(QPainter::SmoothPixmapTransform);
+    painter2.drawPixmap(0,0,228,130,fitpixmap2);
+    ui->label_11->setPixmap(finalPixmap2);
+    // set labl_17 bg-img
+    ui->label_17->setPixmap(QPixmap(":/res/image/extractor.svg").scaled(15,15,Qt::KeepAspectRatio,Qt::SmoothTransformation));
+    // set label_18 bg-img
+    ui->label_18->setPixmap(QPixmap(":/res/image/extractor.svg").scaled(15,15,Qt::KeepAspectRatio,Qt::SmoothTransformation));
+    // set label_19 bg-img
+    ui->label_16->setPixmap(QPixmap(":/res/image/extractor.svg").scaled(15,15,Qt::KeepAspectRatio,Qt::SmoothTransformation));
+
+    // using qpainter to set the image and avoid the problem of image not clear
+    QPixmap pixmap3(":/res/image/color-span.png");
+    QPixmap fitpixmap3=pixmap3.scaled(80,80,Qt::KeepAspectRatio,Qt::SmoothTransformation);
+    QPixmap finalPixmap3(80,80);
+    finalPixmap3.fill(Qt::transparent);
+    QPainter painter3(&finalPixmap3);
+    painter3.setRenderHint(QPainter::Antialiasing);
+    painter3.setRenderHint(QPainter::SmoothPixmapTransform);
+    painter3.drawPixmap(0,0,80,80,fitpixmap3);
+    ui->label_19->setPixmap(finalPixmap3);
+
+    // mimic the volume slider to present a vertical slider instead of horizontal slider
+    ui->verticalSlider->setStyleSheet(
+            "QSlider::groove:vertical {"
+
+            "background: #3D3E3E;"
+            "width: 4px;"
+            "border-radius: 2px;"
+            "}"
+            "QSlider::handle:vertical {"
+            "background:#E7E5E8;"
+            "border: 1px solid #5c5c5c;"
+            "height: 2px;"
+            "margin-left: -5px;"
+            "margin-right: -5px;"
+            "border-radius: 1px;"
+            "}"
+            "QSlider::sub-page:vertical {"
+            "background:#AFB1B3;"
+            "width: 4px;"
+            "border:1px;"
+            "border-radius: 2px;"
+            "}"
+    );
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     // when the pause button is clicked, the video will be paused
     connect(ui->playVideoButton, &QPushButton::clicked, this, [=]() {
         if (player->state() == QMediaPlayer::PlayingState) {
@@ -745,6 +999,29 @@ void MainWindow::showEditDurationBox() {
         // set the font color
         messageBox->setStyleSheet("QLabel{color:#A2A2A2;}");
         messageBox->setStandardButtons(QMessageBox::Ok);
+        // set the OK button style
+        messageBox->button(QMessageBox::Ok)->setStyleSheet("QPushButton{"
+                                                           "background-color:#616161;"
+                                                           "border-radius:5px;"
+                                                           "color:#DDDDDD;"
+                                                           "width:68px;"
+                                                           "height:17px;"
+                                                           "}"
+                                                           "QPushButton:hover{"
+                                                           "background-color:#616161;"
+                                                           "border-radius:5px;"
+                                                           "color:#DDDDDD;"
+                                                           "width:68px;"
+                                                           "height:17px;"
+                                                           "}"
+                                                           "QPushButton:pressed{"
+                                                           "background-color:#616161;"
+                                                           "border-radius:5px;"
+                                                           "color:#DDDDDD;"
+                                                           "width:68px;"
+                                                           "height:17px;"
+                                                           "}"
+        );
 
         // relative move
         messageBox->move(this->x() + (this->width()) / 2 - messageBox->width() / 2 - 200,
@@ -778,7 +1055,11 @@ void MainWindow::initSettingButton() {
     // menu list
     auto *menu = new QMenu(settingButton);
     auto *languageMenu = new QMenu("Set Language", menu);
-    // set the font color as white
+    // set the font-color in the menu as all white
+    languageMenu->setStyleSheet("QMenu{color:white;}");
+
+
+
 
     languageMenu->addAction("English(US)");
     languageMenu->addSeparator();

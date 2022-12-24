@@ -151,7 +151,7 @@ MainWindow::MainWindow(QWidget *parent) :
     auto *speedList = new QMenu(ui->speedButton);
     // style sheet
     speedList->setStyleSheet("QMenu{background-color:#454545; color:#a2a2a2; border:1px solid #454545;}"
-                             "QMenu::item:selected{background-color:#696969; color:#a2a2a2; cursor: pointer;}");
+                             "QMenu::item:selected{background-color:#696969; color:#a2a2a2;}");
     speedList->addAction("0.5x", this, [=]() {
         ui->speedButton->setText(" 0.5x");
         player->setPlaybackRate(0.5);
@@ -375,7 +375,7 @@ MainWindow::MainWindow(QWidget *parent) :
                     player->stop();
                     ui->topBarText->setText(outVideoList[i]->title->text());
 
-                    QTimer::singleShot(50, this, [=]() {
+                    QTimer::singleShot(70, this, [=]() {
                         player->play();
                     });
 
@@ -395,7 +395,7 @@ MainWindow::MainWindow(QWidget *parent) :
                 videoListScrollAreaWidget->setMaximumWidth(111 * (i + 1));
             }
 
-            QTimer::singleShot(50, this, [=]() {
+            QTimer::singleShot(70, this, [=]() {
                 player->play();
             });
 
@@ -948,7 +948,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
         // disable the bottom bar
         ui->bottomBar->setEnabled(false);
-        QTimer::singleShot(50, this, [=]() {
+        QTimer::singleShot(70, this, [=]() {
             ui->bottomBar->setEnabled(true);
         });
     });
@@ -958,13 +958,13 @@ MainWindow::MainWindow(QWidget *parent) :
         playlist->next();
         player->stop();
         // wait for the resource to be released
-        QTimer::singleShot(50, this, [=]() {
+        QTimer::singleShot(70, this, [=]() {
             player->play();
         });
         TheButton::index = playlist->currentIndex();
         // disable the bottom bar
         ui->bottomBar->setEnabled(false);
-        QTimer::singleShot(50, this, [=]() {
+        QTimer::singleShot(70, this, [=]() {
             ui->bottomBar->setEnabled(true);
         });
     });
@@ -973,23 +973,23 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->previousVideoButton, &QPushButton::clicked, this, [=]() {
         playlist->previous();
         player->stop();
-        QTimer::singleShot(50, this, [=]() {
+        QTimer::singleShot(70, this, [=]() {
             player->play();
         });
         TheButton::index = playlist->currentIndex();
         // disable the bottom bar
         ui->bottomBar->setEnabled(false);
-        QTimer::singleShot(50, this, [=]() {
+        QTimer::singleShot(70, this, [=]() {
             ui->bottomBar->setEnabled(true);
         });
     });
 
     connect(ui->videoProgressSlider, &QSlider::valueChanged, this, [=](float value) {
-        if (value > 99) {
+        if (value > 98.5) {
             playlist->next();
             player->stop();
 
-            QTimer::singleShot(50, this, [=](){
+            QTimer::singleShot(70, this, [=](){
                 player->play();
             });
         }

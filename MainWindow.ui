@@ -370,9 +370,9 @@ margin-right:6px</string>
           <property name="geometry">
            <rect>
             <x>0</x>
-            <y>0</y>
+            <y>-254</y>
             <width>386</width>
-            <height>969</height>
+            <height>996</height>
            </rect>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_3">
@@ -426,7 +426,7 @@ margin-right:6px</string>
                   <number>0</number>
                  </property>
                  <property name="bottomMargin">
-                  <number>0</number>
+                  <number>5</number>
                  </property>
                  <item>
                   <widget class="QLabel" name="effectLabel">
@@ -474,6 +474,9 @@ margin-right:6px</string>
                    <property name="text">
                     <string>  Add Texture</string>
                    </property>
+                   <property name="indent">
+                    <number>-1</number>
+                   </property>
                   </widget>
                  </item>
                  <item>
@@ -502,6 +505,9 @@ margin-right:6px</string>
               <item>
                <widget class="QWidget" name="lumetriPresetWidget" native="true">
                 <layout class="QHBoxLayout" name="horizontalLayout_9">
+                 <property name="spacing">
+                  <number>-1</number>
+                 </property>
                  <property name="leftMargin">
                   <number>0</number>
                  </property>
@@ -516,6 +522,10 @@ margin-right:6px</string>
                  </property>
                  <item>
                   <widget class="QLabel" name="lumetriPresetLabel">
+                   <property name="styleSheet">
+                    <string notr="true">padding-left:0px;
+</string>
+                   </property>
                    <property name="text">
                     <string>  Lumetri Preset</string>
                    </property>
@@ -668,12 +678,12 @@ height:2px</string>
                <number>0</number>
               </property>
               <property name="bottomMargin">
-               <number>0</number>
+               <number>10</number>
               </property>
               <item>
                <widget class="QLabel" name="lumetriLabel">
                 <property name="text">
-                 <string>Lumetri</string>
+                 <string> Lumetri</string>
                 </property>
                </widget>
               </item>
@@ -706,12 +716,12 @@ height:2px</string>
                <number>0</number>
               </property>
               <property name="bottomMargin">
-               <number>0</number>
+               <number>10</number>
               </property>
               <item>
                <widget class="QLabel" name="basicConnectionLabel">
                 <property name="text">
-                 <string>Basic Connection </string>
+                 <string> Basic Connection </string>
                 </property>
                </widget>
               </item>
@@ -744,7 +754,7 @@ height:2px</string>
               <string notr="true"/>
              </property>
              <property name="text">
-              <string> Adjustment</string>
+              <string>  Adjustment</string>
              </property>
              <property name="margin">
               <number>0</number>
@@ -787,7 +797,7 @@ height:2px</string>
                  <item>
                   <widget class="QLabel" name="label_2">
                    <property name="text">
-                    <string>Desalination</string>
+                    <string> Desalination</string>
                    </property>
                   </widget>
                  </item>
@@ -808,13 +818,13 @@ height:2px</string>
                   <widget class="QSlider" name="horizontalSlider">
                    <property name="minimumSize">
                     <size>
-                     <width>100</width>
+                     <width>95</width>
                      <height>0</height>
                     </size>
                    </property>
                    <property name="maximumSize">
                     <size>
-                     <width>100</width>
+                     <width>95</width>
                      <height>16777215</height>
                     </size>
                    </property>
@@ -847,7 +857,7 @@ height:2px</string>
                  <item>
                   <widget class="QLabel" name="label_3">
                    <property name="text">
-                    <string>Sharpen     </string>
+                    <string> Sharpen     </string>
                    </property>
                   </widget>
                  </item>
@@ -868,13 +878,13 @@ height:2px</string>
                   <widget class="QSlider" name="horizontalSlider_2">
                    <property name="minimumSize">
                     <size>
-                     <width>100</width>
+                     <width>95</width>
                      <height>0</height>
                     </size>
                    </property>
                    <property name="maximumSize">
                     <size>
-                     <width>100</width>
+                     <width>95</width>
                      <height>16777215</height>
                     </size>
                    </property>
@@ -910,7 +920,7 @@ height:2px</string>
                  <item>
                   <widget class="QLabel" name="label_4">
                    <property name="text">
-                    <string>Saturation    </string>
+                    <string> Saturation    </string>
                    </property>
                   </widget>
                  </item>
@@ -929,9 +939,15 @@ height:2px</string>
                  </item>
                  <item>
                   <widget class="QSlider" name="horizontalSlider_3">
+                   <property name="minimumSize">
+                    <size>
+                     <width>95</width>
+                     <height>0</height>
+                    </size>
+                   </property>
                    <property name="maximumSize">
                     <size>
-                     <width>100</width>
+                     <width>95</width>
                      <height>16777215</height>
                     </size>
                    </property>
@@ -1017,12 +1033,12 @@ height:2px</string>
                <number>0</number>
               </property>
               <property name="bottomMargin">
-               <number>0</number>
+               <number>10</number>
               </property>
               <item>
                <widget class="QLabel" name="label_9">
                 <property name="text">
-                 <string>Color Balance</string>
+                 <string> Color Balance</string>
                 </property>
                </widget>
               </item>
@@ -1041,9 +1057,15 @@ height:2px</string>
               </item>
               <item>
                <widget class="QSlider" name="horizontalSlider_4">
+                <property name="minimumSize">
+                 <size>
+                  <width>95</width>
+                  <height>0</height>
+                 </size>
+                </property>
                 <property name="maximumSize">
                  <size>
-                  <width>100</width>
+                  <width>95</width>
                   <height>16777215</height>
                  </size>
                 </property>
@@ -1078,14 +1100,14 @@ height:2px</string>
               <item>
                <widget class="QLabel" name="label_10">
                 <property name="text">
-                 <string>Lumetri Range</string>
+                 <string> Lumetri Range</string>
                 </property>
                </widget>
               </item>
               <item>
                <widget class="QLabel" name="label_11">
                 <property name="text">
-                 <string>Lumetri Pic</string>
+                 <string> Lumetri Pic</string>
                 </property>
                </widget>
               </item>
@@ -1107,7 +1129,7 @@ height:2px</string>
               <item>
                <widget class="QLabel" name="label_12">
                 <property name="text">
-                 <string>Optimization</string>
+                 <string> Optimization</string>
                 </property>
                </widget>
               </item>
@@ -1160,7 +1182,7 @@ height:2px</string>
                  <item>
                   <widget class="QLabel" name="label_13">
                    <property name="text">
-                    <string>Denoise</string>
+                    <string> Denoise</string>
                    </property>
                   </widget>
                  </item>
@@ -1208,7 +1230,7 @@ height:2px</string>
                  <item>
                   <widget class="QLabel" name="label_14">
                    <property name="text">
-                    <string>Bedim   </string>
+                    <string> Bedim   </string>
                    </property>
                   </widget>
                  </item>
@@ -1256,7 +1278,7 @@ height:2px</string>
               <item>
                <widget class="QLabel" name="label_15">
                 <property name="text">
-                 <string>Color Extractor</string>
+                 <string> Color Extractor</string>
                 </property>
                </widget>
               </item>
@@ -1386,7 +1408,7 @@ height:2px</string>
                  <item>
                   <widget class="QLabel" name="label_20">
                    <property name="text">
-                    <string>CCT</string>
+                    <string> CCT</string>
                    </property>
                   </widget>
                  </item>
@@ -1434,7 +1456,7 @@ height:2px</string>
                  <item>
                   <widget class="QLabel" name="label_21">
                    <property name="text">
-                    <string>HUE</string>
+                    <string> HUE</string>
                    </property>
                   </widget>
                  </item>
@@ -1488,7 +1510,7 @@ height:2px</string>
                  <item>
                   <widget class="QLabel" name="label_22">
                    <property name="text">
-                    <string>Contrast           </string>
+                    <string> Contrast           </string>
                    </property>
                   </widget>
                  </item>
